@@ -13,10 +13,12 @@ export type AppMenuItem = {
 };
 
 export type AppMenuActionItem = {
-  label: 'Logout';
-  action: 'logout';
+  label: string;
+  action: 'logout' | 'toggleLanguage';
   icon: IconName;
 };
+
+export type AppMenuUnion = AppMenuItem | AppMenuActionItem;
 
 export const BOTTOM_TABS = [
   { label: 'Dashboard', href: '/', icon: 'view-dashboard-outline' },
@@ -27,7 +29,7 @@ export const BOTTOM_TABS = [
 
 export const MORE_MENU_SECTIONS: readonly {
   title: string;
-  items: readonly (AppMenuItem | AppMenuActionItem)[];
+  items: readonly AppMenuUnion[];
 }[] = [
   {
     title: 'Main navigation',

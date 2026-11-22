@@ -59,27 +59,4 @@ i18n.use(initReactI18next).init({
   ns: ['common', 'customers', 'measurements', 'sidebar', 'users', 'orders', 'adminUsers', 'jobs'],
 });
 
-const setupLanguage = async () => {
-  const savedLanguage = await AsyncStorage.getItem(LANGUAGE_KEY);
-  const language = savedLanguage || Localization.getLocales()[0].languageCode || 'en';
-
-  if (language !== 'en') {
-    await i18n.changeLanguage(language);
-  }
-
-  if (language === 'ur') {
-    if (!I18nManager.isRTL) {
-        I18nManager.forceRTL(true);
-        I18nManager.allowRTL(true);
-    }
-  } else {
-    if (I18nManager.isRTL) {
-        I18nManager.forceRTL(false);
-        I18nManager.allowRTL(false);
-    }
-  }
-};
-
-setupLanguage();
-
 export default i18n;

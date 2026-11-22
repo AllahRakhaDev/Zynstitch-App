@@ -1,5 +1,6 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useRouter } from 'expo-router';
+import { useTranslation } from "react-i18next";
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
@@ -13,6 +14,7 @@ import { useSession } from '@/providers/AuthProvider';
 import type { IOrder } from '@/types/orders.types';
 
 export default function DashboardScreen() {
+  const { t } = useTranslation("common");
   const colors = useTheme();
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -53,16 +55,16 @@ export default function DashboardScreen() {
   }, []);
 
   const summaryItems = [
-    { label: 'Customers', value: totals.customers, icon: 'account-group-outline' as const, route: '/customers' as const },
-    { label: 'Orders', value: totals.orders, icon: 'package-variant-closed' as const, route: '/orders' as const },
-    { label: 'Measurements', value: totals.measurements, icon: 'ruler' as const, route: '/measurements' as const },
+    { label: t('customers'), value: totals.customers, icon: 'account-group-outline' as const, route: '/customers' as const },
+    { label: t('orders'), value: totals.orders, icon: 'package-variant-closed' as const, route: '/orders' as const },
+    { label: t('measurements'), value: totals.measurements, icon: 'ruler' as const, route: '/measurements' as const },
   ];
 
   const quickActions = [
-    { label: 'Customers', description: 'View customer records', icon: 'account-group-outline' as const, route: '/customers' as const },
-    { label: 'Measurements', description: 'Open measurement profiles', icon: 'ruler' as const, route: '/measurements' as const },
-    { label: 'Jobs', description: 'Track exports and jobs', icon: 'briefcase-outline' as const, route: '/jobs' as const },
-    { label: 'More options', description: 'Settings and account', icon: 'dots-horizontal-circle-outline' as const, route: '/more' as const },
+    { label: t('customers'), description: t('viewCustomerRecords'), icon: 'account-group-outline' as const, route: '/customers' as const },
+    { label: t('measurements'), description: t('openMeasurementProfiles'), icon: 'ruler' as const, route: '/measurements' as const },
+    { label: t('jobs'), description: t('trackExportsAndJobs'), icon: 'briefcase-outline' as const, route: '/jobs' as const },
+    { label: t('moreOptions'), description: t('settingsAndAccount'), icon: 'dots-horizontal-circle-outline' as const, route: '/more' as const },
   ];
 
   return (
@@ -74,8 +76,8 @@ export default function DashboardScreen() {
         <View style={styles.titleGroup}>
           <BackArrowButton fallbackHref="/customers" />
           <View>
-            <Text variant="bodyMedium" style={{ color: colors.textSecondary }}>Zynstitch overview</Text>
-            <Text variant="headlineSmall" style={styles.greeting}>Hello, {user?.name?.split(' ')[0] || 'there'}</Text>
+            <Text variant="bodyMedium" style={{ color: colors.textSecondary }}>{t('overview')}</Text>
+            <Text variant="headlineSmall" style={styles.greeting}>{t('helloUser', { name: user?.name?.split(' ')[0] || 'there' })}</Text>
           </View>
         </View>
         <View style={[styles.brandMark, { backgroundColor: colors.backgroundSelected }]}>
@@ -84,39 +86,24 @@ export default function DashboardScreen() {
       </View>
 
       <View style={[styles.welcomeCard, { backgroundColor: colors.primary }]}>
-        <Text variant="titleLarge" style={styles.welcomeTitle}>Your studio at a glance</Text>
+        <Text variant="titleLarge" style={styles.welcomeTitle}>{t('studioAtAGlance')}</Text>
         <Text variant="bodyMedium" style={styles.welcomeDescription}>
-          Keep customers, orders, and tailoring work organized from one place.
+          {t('keepOrganized')}
         </Text>
       </View>
 
-      <View style={styles.sectionHeading}>
-        <Text variant="titleLarge" style={styles.sectionTitle}>Overview</Text>
-        {loading ? <ActivityIndicator size="small" color={colors.primary} /> : null}
-      </View>
       <View style={styles.summaryGrid}>
         {summaryItems.map((item) => (
-          <Pressable
-            key={item.label}
-            onPress={() => router.push(item.route)}
-            accessibilityRole="button"
-            accessibilityLabel={`${item.label}: ${item.value}`}
-            style={({ pressed }) => [
-              styles.summaryCard,
-              { backgroundColor: colors.surface, borderColor: colors.outline },
-              pressed && styles.pressed,
-            ]}
-          >
+          <View key={item.label} style={[styles.summaryCard, { backgroundColor: colors.surface, borderColor: colors.outline }]}>
             <View style={[styles.summaryIcon, { backgroundColor: colors.backgroundSelected }]}>
-              <MaterialCommunityIcons name={item.icon} size={21} color={colors.primary} />
+              <MaterialCommunityIcons name={item.icon} size={24} color={colors.primary} />
             </View>
-            <Text variant="headlineSmall" style={styles.summaryValue}>{loading ? '—' : item.value}</Text>
-            <Text variant="bodySmall" style={{ color: colors.textSecondary }}>{item.label}</Text>
-          </Pressable>
+            <Text variant="titleMedium" style={styles.summaryValue}>{item.value}</Text>
+            <Text variant="labelMedium" style={{ color: colors.textSecondary }}>{item.label}</Text>
+          </View>
         ))}
       </View>
 
-      <Text variant="titleLarge" style={styles.sectionTitle}>Quick access</Text>
       <View style={styles.actionGrid}>
         {quickActions.map((action) => (
           <Pressable
@@ -137,13 +124,13 @@ export default function DashboardScreen() {
       </View>
 
       <View style={styles.sectionHeading}>
-        <Text variant="titleLarge" style={styles.sectionTitle}>Recent orders</Text>
+        <Text variant="titleLarge" style={styles.sectionTitle}>{t('recentOrders')}</Text>
         <Text
           variant="labelLarge"
           onPress={() => router.push('/orders')}
           style={{ color: colors.primary }}
         >
-          View all
+          {t('viewAll')}
         </Text>
       </View>
       <View style={[styles.recentCard, { backgroundColor: colors.surface, borderColor: colors.outline }]}>
@@ -152,19 +139,19 @@ export default function DashboardScreen() {
             {index ? <View style={[styles.separator, { backgroundColor: colors.outline }]} /> : null}
             <View style={styles.orderRow}>
               <View style={{ flex: 1 }}>
-                <Text variant="titleSmall">{order.orderNumber ?? 'Order'}</Text>
+                <Text variant="titleSmall">{t('order')}: {order.orderNumber ?? 'Order'}</Text>
                 <Text variant="bodySmall" style={{ color: colors.textSecondary }}>
                   {order.customerName ?? order.customerId}
                 </Text>
               </View>
               <Text variant="labelMedium" style={{ color: colors.primary }}>
-                {order.status.replaceAll('_', ' ')}
+                {t('status') + ': ' + t('orders:status.' + order.status, order.status.replaceAll('_', ' '))}
               </Text>
             </View>
           </View>
         )) : (
           <Text variant="bodyMedium" style={{ color: colors.textSecondary }}>
-            {loading ? 'Loading your orders…' : 'No orders to show yet.'}
+            {loading ? t('loadingOrders') : t('noOrders')}
           </Text>
         )}
       </View>

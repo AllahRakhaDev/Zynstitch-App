@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { deleteCustomer, fetchAllCustomers, saveCustomer } from '@/api';
 import { CollectionTableScreen } from '@/components/shared/CollectionTableScreen';
 import type { ICustomer } from '@/types/customer.types';
@@ -17,6 +18,7 @@ const formatPhoneNumber = (phone: string): { formatted: string; isValid: boolean
 };
 
 export default function CustomersScreen() {
+  const { t } = useTranslation('customers');
   const loadCustomers = async (search: string) => {
     const response = await fetchAllCustomers(0, 50, search ? { search } : undefined);
     return {
@@ -29,8 +31,8 @@ export default function CustomersScreen() {
 
   return (
     <CollectionTableScreen
-      title="Customers"
-      singularTitle="Customer"
+      title={t('title')}
+      singularTitle={t('modal.createTitle')}
       entity="customers"
       initialData={[]}
       loadRows={loadCustomers}
@@ -52,12 +54,12 @@ export default function CustomersScreen() {
         );
       }}
       saveRowRemote={async (values, existing) => {
-        const { formatted, isValid } = formatPhoneNumber(String(values.phone ?? ''));
+        const { formatted, isValid } = formatPhoneNumber(String(values.phone ?? ""));
         if (!isValid) {
           return {
             success: false,
-            message:
-              'Invalid phone number format. Must start with 0 (11 digits) or 92 (12 digits).',
+            message: t("serviceMessages.invalidPhone"),
+            data: null,
           };
         }
 
@@ -76,16 +78,16 @@ export default function CustomersScreen() {
         return { success: response.success, message: response.message, data: response.data };
       }}
       fields={[
-        { key: 'name', label: 'Name', type: 'text', required: true },
-        { key: 'phone', label: 'Phone', type: 'text', required: true },
-        { key: 'email', label: 'Email', type: 'text', required: true },
-        { key: 'address', label: 'Address', type: 'text', required: true },
+        { key: 'name', label: t('modal.fields.name'), type: 'text', required: true },
+        { key: 'phone', label: t('modal.fields.phone'), type: 'text', required: true },
+        { key: 'email', label: t('modal.fields.email'), type: 'text', required: true },
+        { key: 'address', label: t('modal.fields.address'), type: 'text', required: true },
       ]}
       columns={[
-        { key: 'name', label: 'Name' },
-        { key: 'phone', label: 'Phone' },
-        { key: 'email', label: 'Email' },
-        { key: 'address', label: 'Address' },
+        { key: 'name', label: t('table.name') },
+        { key: 'phone', label: t('table.phone') },
+        { key: 'email', label: t('table.email') },
+        { key: 'address', label: t('table.address') },
       ]}
     />
   );
