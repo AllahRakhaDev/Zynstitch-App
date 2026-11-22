@@ -14,8 +14,9 @@ import {
     useState,
     type ReactNode,
 } from 'react';
-import { useColorScheme } from 'react-native';
+import { I18nManager, useColorScheme } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
+import i18n from '@/i18n.config';
 
 import { brandColors, getPaperTheme, type ThemeMode } from '@/theme';
 
@@ -99,6 +100,14 @@ export default function ThemeProvider({ children }: Props) {
 
   const setLanguage = useCallback((next: AppLanguage) => {
     setLanguageState(next);
+    i18n.changeLanguage(next);
+    if (next === 'ur') {
+        I18nManager.forceRTL(true);
+        I18nManager.allowRTL(true);
+    } else {
+        I18nManager.forceRTL(false);
+        I18nManager.allowRTL(false);
+    }
   }, []);
 
   const toggleTheme = useCallback(() => {

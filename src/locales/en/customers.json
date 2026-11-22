@@ -1,0 +1,79 @@
+{
+  "title": "Customers",
+  "breadcrumb": {
+    "home": "Home",
+    "customers": "Customers"
+  },
+  "table": {
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "actions": "Actions"
+  },
+  "messages": {
+    "loading": "Loading customers...",
+    "noData": "No customers found."
+  },
+  "addCustomer": "Add Customer",
+  "exportCustomers": "Export",
+  "filters": {
+    "search": {
+      "label": "Search Customer",
+      "placeholder": "Search by customer name, email or phone"
+    },
+    "date": {
+      "label": "Date",
+      "placeholder": "Select date"
+    }
+  },
+  "modal": {
+    "createTitle": "Add Customer",
+    "updateTitle": "Update Customer",
+    "fields": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address"
+    },
+    "actions": {
+      "create": "Create",
+      "update": "Update",
+      "creating": "Creating...",
+      "updating": "Updating...",
+      "cancel": "Cancel"
+    }
+  },
+  "confirmDeleteModal": {
+    "title": "Delete Customer",
+    "message": "Are you sure you want to delete this customer?",
+    "actions": {
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    }
+  },
+  "confirmExportModal": {
+    "title": "Export Customers",
+    "message": "Are you sure you want to export customers data?",
+    "actions": {
+      "confirm": "Export",
+      "cancel": "Cancel"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "Customers fetched successfully",
+    "fetchFail": "Failed to fetch customers",
+    "unauthorized": "Your session is invalid or you are not authorized to perform this action.",
+    "notFound": "Customer not found",
+    "duplicate": "A customer already exists with the same name, phone, and email",
+    "createSuccess": "Customer created successfully",
+    "updateSuccess": "Customer updated successfully",
+    "saveFail": "Failed to save customer",
+    "deleteSuccess": "Customer deleted",
+    "deleteNotFound": "Customer not found",
+    "deleteFail": "Failed to delete customer",
+    "exportJobCreated": "Export job created successfully",
+    "exportJobCreateFail": "Failed to create export job",
+    "somethingWentWrong": "Something went wrong."
+  }
+}

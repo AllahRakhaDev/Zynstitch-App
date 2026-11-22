@@ -1,0 +1,19 @@
+{
+    "toolBarTitle": "ٹریک ٹیلر",
+    "sidebar": {
+        "Customers": "گاہک",
+        "Orders": "آرڈرز",
+        "Measurements": "پیمائش",
+        "Jobs": "کام",
+        "Users": "صارفین",
+        "Settings": "ترتیبات",
+        "Dashboard": "ڈیش بورڈ",
+        "More": "مزید"
+    },
+    "sidebarUserMenu": {
+        "profile": "پروفائل",
+        "toggle_theme": "تھیم تبدیل کریں",
+        "language": "زبان",
+        "logout": "لاگ آؤٹ"
+    }
+}

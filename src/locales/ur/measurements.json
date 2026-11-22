@@ -1,0 +1,116 @@
+{
+  "title": "پیمائش",
+  "page": {
+    "createTitle": "پیمائش بنائیں",
+    "updateTitle": "پیمائش اپ ڈیٹ کریں"
+  },
+  "section": {
+    "customerTitle": "کسٹمر کی معلومات",
+    "measurementTitle": "پیمائش کی تفصیلات",
+    "designTitle": "ڈیزائن اور کسٹمائزیشن"
+  },
+  "breadcrumb": {
+    "home": "ہوم",
+    "measurements": "پیمائش",
+    "create": "بنائیں",
+    "update": "اپ ڈیٹ کریں"
+  },
+  "addMeasurement": "پیمائش شامل کریں",
+  "exportMeasurements": "برآمد کریں",
+  "filters": {
+    "search": {
+      "label": "پیمائش تلاش کریں",
+      "placeholder": "پیمائش کے نام، کسٹمر کے نام یا فون کے ذریعے تلاش کریں"
+    },
+    "date": {
+      "label": "تاریخ",
+      "placeholder": "تاریخ منتخب کریں"
+    }
+  },
+  "table": {
+    "name": "نام",
+    "customerName": "کسٹمر",
+    "phone": "فون",
+    "notes": "نوٹس",
+    "measurementDate": "پیمائش کی تاریخ",
+    "actions": "ایکشنز",
+    "measurementName": "پیمائش کا نام"
+  },
+  "form": {
+    "measurementName": "پیمائش کا نام",
+    "customer": "کسٹمر",
+    "phone": "فون (اختیاری)",
+    "measurementDate": "پیمائش کی تاریخ",
+    "notes": "نوٹس",
+    "yes": "ہاں",
+    "no": "نہیں",
+    "collarStylePlaceholder": "کالر کا انداز منتخب کریں",
+    "fields": {
+      "kameezLength": "قمیض لمبائی (Kameez Length)",
+      "sleeveLength": "بازو (Sleeve)",
+      "shoulderWidth": "تیرا (Shoulder)",
+      "neck": "گلا (Neck)",
+      "chest": "چھاتی (Chest)",
+      "waist": "کمر (Waist)",
+      "bottomWidth": "گھیرا (Bottom Width)",
+      "shalwarLength": "شلوار (Shalwar)",
+      "bottomOpening": "پانچہ (Bottom Opening)",
+      "cuff": "کف (Cuff)",
+      "collarStyle": "کالر / بین (Collar / Ban)",
+      "hasChakPattiKaaj": "چاک پٹی کاج (Chak Patti Kaaj)",
+      "hasChestPocket": "چھاتی جیب (Chest Pocket)",
+      "hasSidePockets": "سائیڈ جیب (Side Pockets)",
+      "hasShalwarPocket": "شلوار جیب (Shalwar Pocket)"
+    },
+    "collarStyles": {
+      "noCollar": "بغیر کالر",
+      "collar": "کالر",
+      "ban": "بین",
+      "other": "دیگر"
+    },
+    "actions": {
+      "create": "بنائیں",
+      "update": "اپ ڈیٹ کریں",
+      "saving": "محفوظ کیا جا رہا ہے...",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "validation": {
+    "required": "یہ فیلڈ ضروری ہے",
+    "dateFutureOnly": "تاریخ آج یا مستقبل کی ہونی چاہیے"
+  },
+  "confirmDeleteModal": {
+    "title": "پیمائش حذف کریں",
+    "message": "کیا آپ واقعی اس پیمائش کو حذف کرنا چاہتے ہیں؟",
+    "actions": {
+      "confirm": "حذف کریں",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "confirmExportModal": {
+    "title": "برآمد کریں",
+    "message": "کیا آپ واقعی پیمائش کے ڈیٹا کو برآمد کرنا چاہتے ہیں؟",
+    "actions": {
+      "confirm": "برآمد کریں",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "پیمائش کامیابی سے حاصل ہو گئے",
+    "fetchFail": "پیمائش حاصل کرنے میں ناکامی",
+    "unauthorized": "آپ اس کارروائی کی اجازت نہیں رکھتے۔ براہِ کرم دوبارہ سائن اِن کریں یا اپنے منتظم (ایڈمنسٹریٹر) سے رابطہ کریں۔",
+    "notFound": "پیمائش نہیں ملی",
+    "createSuccess": "پیمائش کامیابی سے بنایا گیا",
+    "updateSuccess": "پیمائش کامیابی سے اپ ڈیٹ ہوا",
+    "saveFail": "پیمائش محفوظ کرنے میں ناکامی",
+    "deleteSuccess": "پیمائش کامیابی سے حذف ہو گیا",
+    "deleteNotFound": "پیمائش نہیں ملا",
+    "deleteFail": "پیمائش حذف کرنے میں ناکامی",
+    "exportJobCreated": "برآمدی کام کامیابی سے تخلیق کیا گیا",
+    "exportJobCreateFail": "برآمدی کام تخلیق کرنے میں ناکام",
+    "somethingWentWrong": "کچھ غلط ہوگیا۔"
+  },
+  "downloadPdf": {
+    "generatedOn": "تخلیق کی تاریخ"
+  }
+}

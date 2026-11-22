@@ -1,0 +1,113 @@
+{
+  "title": "آرڈرز",
+  "breadcrumb": {
+    "home": "ہوم",
+    "orders": "آرڈرز"
+  },
+  "addOrder": "نیا آرڈر شامل کریں",
+  "exportOrders": " برآمد کریں",
+  "filters": {
+    "search": {
+      "label": "آرڈرز تلاش کریں",
+      "placeholder": "آرڈر نمبر، کسٹمر یا حیثیت سے تلاش کریں"
+    },
+    "status": {
+      "label": "آرڈر اسٹیٹس",
+      "placeholder": "اسٹیٹس منتخب کریں"
+    },
+    "date": {
+      "label": "تاریخ",
+      "placeholder": "تاریخ منتخب کریں"
+    }
+  },
+  "table": {
+    "orderNumber": "آرڈر نمبر",
+    "customerName": "کسٹمر نام",
+    "customerPhone": "کسٹمر فون نمبر",
+    "price": "قیمت",
+    "advancePaid": "ایڈوانس ادائیگی",
+    "status": "حیثیت",
+    "orderDate": "آرڈر کی تاریخ",
+    "dueDate": "مقررہ تاریخ",
+    "notes": "نوٹس",
+    "actions": "عمل"
+  },
+  "status": {
+    "all": "تمام",
+    "pending": "زیر التوا",
+    "in_progress": "عمل میں",
+    "completed": "مکمل",
+    "delivered": "موصول شدہ"
+  },
+  "modal": {
+    "createTitle": "آرڈر شامل کریں",
+    "updateTitle": "آرڈر اپ ڈیٹ کریں",
+    "viewTitle": "آرڈر دیکھیں",
+    "fields": {
+      "customer": "کسٹمر",
+      "orderNumber": "آرڈر نمبر",
+      "status": "حیثیت",
+      "price": "قیمت",
+      "advancePaid": "ایڈوانس ادائیگی",
+      "orderDate": "آرڈر کی تاریخ",
+      "dueDate": "مقررہ تاریخ",
+      "notes": "نوٹس"
+    },
+    "actions": {
+      "create": "بنائیں",
+      "update": "اپ ڈیٹ کریں",
+      "creating": "بنایا جا رہا ہے...",
+      "updating": "اپ ڈیٹ کیا جا رہا ہے...",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "section": {
+    "orderInfo": "آرڈر کی معلومات",
+    "customerInfo": "کسٹمر کی معلومات",
+    "paymentInfo": "ادائیگی کی معلومات"
+  },
+  "form": {
+    "validation": {
+      "customerRequired": "کسٹمر منتخب کرنا ضروری ہے",
+      "orderNumberRequired": "آرڈر نمبر ضروری ہے",
+      "statusRequired": "حیثیت منتخب کرنا ضروری ہے",
+      "priceRequired": "قیمت ضروری ہے",
+      "advancePaidRequired": "ایڈوانس ادائیگی ضروری ہے",
+      "orderDateRequired": "آرڈر کی تاریخ ضروری ہے",
+      "dueDateRequired": "مقررہ تاریخ ضروری ہے",
+      "dueDateAfterOrderDate": "مقررہ تاریخ آرڈر کی تاریخ کے برابر یا اس کے بعد ہونی چاہیے"
+    }
+  },
+  "confirmDeleteModal": {
+    "title": "آرڈر حذف کریں",
+    "message": "کیا آپ واقعی اس آرڈر کو حذف کرنا چاہتے ہیں؟",
+    "actions": {
+      "confirm": "حذف کریں",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "confirmExportModal": {
+    "title": "آرڈرز برآمد کریں",
+    "message": "کیا آپ واقعی آرڈرز کا ڈیٹا برآمد کرنا چاہتے ہیں؟",
+    "actions": {
+      "confirm": "برآمد کریں",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "آرڈرز کامیابی کے ساتھ حاصل ہوگئے",
+    "fetchFail": "آرڈرز حاصل کرنے میں ناکامی",
+    "unauthorized": "آپ اس کارروائی کی اجازت نہیں رکھتے۔ براہِ کرم دوبارہ سائن اِن کریں یا اپنے منتظم (ایڈمنسٹریٹر) سے رابطہ کریں۔",
+    "notFound": "آرڈر نہیں ملا",
+    "duplicate": "ایسی ہی تفصیلات کے ساتھ آرڈر پہلے سے موجود ہے",
+    "createSuccess": "آرڈر کامیابی سے بنایا گیا",
+    "updateSuccess": "آرڈر کامیابی سے اپ ڈیٹ ہوا",
+    "saveFail": "آرڈر محفوظ کرنے میں ناکامی",
+    "deleteSuccess": "آرڈر کامیابی سے حذف ہوا",
+    "deleteNotFound": "آرڈر نہیں ملا",
+    "deleteFail": "آرڈر حذف کرنے میں ناکامی",
+    "exportJobCreated": "برآمدی کام کامیابی سے بنایا گیا",
+    "exportJobCreateFail": "برآمدی کام بنانے میں ناکامی",
+    "somethingWentWrong": "کچھ غلط ہوگیا۔"
+  }
+}

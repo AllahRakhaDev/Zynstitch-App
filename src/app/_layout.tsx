@@ -4,6 +4,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import '@/i18n.config';
+
 import { LoadingScreen } from '@/components/shared/LoadingScreen';
 import { AuthProvider, useSession } from '@/providers/AuthProvider';
 import SnackbarProvider from '@/providers/SnackbarProvider';

@@ -50,8 +50,9 @@ export const MORE_MENU_SECTIONS: readonly {
   {
     title: 'Account',
     items: [
-      { label: 'Profile', href: '/profile', icon: 'account-circle-outline' },
-      { label: 'Logout', action: 'logout', icon: 'logout' },
+      { label: 'profile', href: '/profile', icon: 'account-circle-outline' },
+      { label: 'language', action: 'toggleLanguage', icon: 'translate' },
+      { label: 'logout', action: 'logout', icon: 'logout' },
     ],
   },
 ];

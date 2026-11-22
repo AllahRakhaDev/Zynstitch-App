@@ -1,0 +1,91 @@
+{
+  "title": "صارفین",
+  "breadcrumb": {
+    "home": "ہوم",
+    "users": "صارفین"
+  },
+  "table": {
+    "name": "نام",
+    "email": "ای میل",
+    "role": "کردار",
+    "companyName": "کمپنی کا نام",
+    "status": "حیثیت",
+    "actions": "اعمال"
+  },
+  "addUser": "صارف شامل کریں",
+  "runJobsCron": "جابز کرون چلائیں",
+  "runJobsCronRunning": "چل رہا ہے...",
+  "role": {
+    "ADMIN": "ایڈمن",
+    "SUPER_ADMIN": "سپر ایڈمن"
+  },
+  "status": {
+    "ACTIVE": "فعال",
+    "BLOCKED": "مسدود"
+  },
+  "filters": {
+    "search": {
+      "label": "صارف تلاش کریں",
+      "placeholder": "نام، ای میل یا کمپنی سے تلاش کریں"
+    },
+    "role": {
+      "label": "کردار",
+      "all": "تمام کردار"
+    },
+    "status": {
+      "label": "حیثیت",
+      "all": "تمام حیثیتیں"
+    }
+  },
+  "modal": {
+    "createTitle": "صارف شامل کریں",
+    "updateTitle": "صارف اپ ڈیٹ کریں",
+    "fields": {
+      "name": "نام",
+      "email": "ای میل",
+      "password": "پاس ورڈ",
+      "passwordOptional": "پاس ورڈ (موجودہ برقرار رکھنے کے لیے خالی چھوڑیں)",
+      "role": "کردار",
+      "companyName": "کمپنی کا نام",
+      "status": "حیثیت"
+    },
+    "errors": {
+      "invalidEmail": "ای میل درست نہیں ہے",
+      "passwordMin": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے"
+    },
+    "actions": {
+      "create": "بنائیں",
+      "update": "اپ ڈیٹ",
+      "creating": "بنایا جا رہا ہے...",
+      "updating": "اپ ڈیٹ ہو رہا ہے...",
+      "cancel": "منسوخ",
+      "showPassword": "پاس ورڈ دکھائیں",
+      "hidePassword": "پاس ورڈ چھپائیں"
+    }
+  },
+  "confirmDeleteModal": {
+    "title": "صارف حذف کریں",
+    "message": "کیا آپ واقعی اس صارف کو حذف کرنا چاہتے ہیں؟",
+    "actions": {
+      "confirm": "حذف",
+      "cancel": "منسوخ"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "صارفین کامیابی سے حاصل ہوئے",
+    "fetchFail": "صارفین حاصل کرنے میں ناکامی",
+    "forbidden": "آپ کو یہ عمل کرنے کی اجازت نہیں ہے",
+    "duplicate": "اس ای میل کے ساتھ صارف پہلے سے موجود ہے",
+    "passwordRequired": "صارف بناتے وقت پاس ورڈ ضروری ہے",
+    "createSuccess": "صارف کامیابی سے بنایا گیا",
+    "updateSuccess": "صارف کامیابی سے اپ ڈیٹ ہوا",
+    "saveFail": "صارف محفوظ کرنے میں ناکامی",
+    "deleteSuccess": "صارف کامیابی سے حذف ہوا",
+    "deleteNotFound": "صارف نہیں ملا",
+    "deleteFail": "صارف حذف کرنے میں ناکامی",
+    "cannotDeleteSelf": "آپ اپنا اکاؤنٹ حذف نہیں کر سکتے",
+    "cronNotConfigured": "جابز کرون سروس کنفیگر نہیں ہے",
+    "cronTriggerSuccess": "جابز کرون کامیابی سے شروع ہوا",
+    "cronTriggerFail": "جابز کرون شروع کرنے میں ناکامی"
+  }
+}

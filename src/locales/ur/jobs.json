@@ -1,0 +1,46 @@
+{
+  "title": "ایکسپورٹ جابز",
+  "breadcrumb": {
+    "home": "ہوم",
+    "jobs": "کام"
+  },
+  "table": {
+    "entity": "اینٹیٹی",
+    "status": "اسٹیٹس",
+    "createdAt": "تخلیق کی تاریخ",
+    "actions": "عمل"
+  },
+  "filters": {
+    "search": {
+      "label": "کسٹمر تلاش کریں",
+      "placeholder": "کسٹمر کے نام، ای میل یا فون سے تلاش کریں"
+    }
+  },
+  "messages": {
+    "loading": "جابز لوڈ ہو رہی ہیں...",
+    "noData": "کوئی جاب نہیں ملی۔"
+  },
+  "confirmDeleteModal": {
+    "title": "جاب حذف کریں",
+    "message": "کیا آپ واقعی اس جاب کو حذف کرنا چاہتے ہیں؟",
+    "actions": {
+      "confirm": "حذف کریں",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "جابز کامیابی سے حاصل ہو گئیں",
+    "fetchFail": "جابز حاصل کرنے میں ناکام",
+    "unauthorized": "آپ اس کارروائی کی اجازت نہیں رکھتے۔ براہِ کرم دوبارہ سائن اِن کریں یا اپنے منتظم (ایڈمنسٹریٹر) سے رابطہ کریں۔",
+    "notFound": "جاب نہیں ملی",
+    "deleteSuccess": "جاب کامیابی سے حذف کر دی گئی",
+    "deleteNotFound": "جاب نہیں ملی",
+    "deleteFail": "جاب حذف کرنے میں ناکام",
+    "exportJobCreated": "برآمدی جاب کامیابی سے تخلیق کی گئی",
+    "exportJobCreateFail": "برآمدی جاب تخلیق کرنے میں ناکام",
+    "somethingWentWrong": "کچھ غلط ہو گیا۔",
+    "downloadNotAvailable": "ڈاؤن لوڈ دستیاب نہیں ہے",
+    "downloadStarted": "ڈاؤن لوڈ شروع ہو گیا ہے",
+    "downloadFail": "فائل ڈاؤن لوڈ کرنے میں ناکام"
+  }
+}

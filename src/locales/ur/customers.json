@@ -1,0 +1,79 @@
+{
+  "title": "گاہک",
+  "breadcrumb": {
+    "home": "ہوم",
+    "customers": "گاہک"
+  },
+  "table": {
+    "name": "نام",
+    "phone": "فون",
+    "email": "ای میل",
+    "address": "پتہ",
+    "actions": "عمل"
+  },
+  "messages": {
+    "loading": "گاہک لوڈ ہو رہے ہیں...",
+    "noData": "کوئی گاہک نہیں ملا۔"
+  },
+  "addCustomer": "نیا گاہک شامل کریں",
+  "exportCustomers": " برآمد کریں",
+  "filters": {
+    "search": {
+      "label": "گاہک تلاش کریں",
+      "placeholder": "گاہک کے نام، ای میل یا فون کے ذریعے تلاش کریں"
+    },
+    "date": {
+      "label": "تاریخ",
+      "placeholder": "تاریخ منتخب کریں"
+    }
+  },
+  "modal": {
+    "createTitle": "گاہک شامل کریں",
+    "updateTitle": "گاہک اپ ڈیٹ کریں",
+    "fields": {
+      "name": "نام",
+      "phone": "فون نمبر",
+      "email": "ای میل",
+      "address": "پتہ"
+    },
+    "actions": {
+      "create": "بنائیں",
+      "update": "اپ ڈیٹ کریں",
+      "creating": "بنایا جا رہا ہے...",
+      "updating": "اپ ڈیٹ کیا جا رہا ہے...",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "confirmDeleteModal": {
+    "title": "گاہک حذف کریں",
+    "message": "کیا آپ واقعی اس گاہک کو حذف کرنا چاہتے ہیں؟",
+    "actions": {
+      "confirm": "حذف کریں",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "confirmExportModal": {
+    "title": "گاہک برآمد کریں",
+    "message": "کیا آپ واقعی گاہکوں کا ڈیٹا برآمد کرنا چاہتے ہیں؟",
+    "actions": {
+      "confirm": "برآمد کریں",
+      "cancel": "منسوخ کریں"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "صارفین کامیابی سے حاصل ہوگئے",
+    "fetchFail": "صارفین حاصل کرنے میں ناکام",
+    "unauthorized": "آپ اس کارروائی کی اجازت نہیں رکھتے۔ براہِ کرم دوبارہ سائن اِن کریں یا اپنے منتظم (ایڈمنسٹریٹر) سے رابطہ کریں۔",
+    "notFound": "صارف نہیں ملا",
+    "duplicate": "ایک ہی نام، فون اور ای میل کے ساتھ صارف پہلے سے موجود ہے",
+    "createSuccess": "صارف کامیابی سے بنایا گیا",
+    "updateSuccess": "صارف کامیابی سے اپ ڈیٹ ہوا",
+    "saveFail": "صارف محفوظ کرنے میں ناکام",
+    "deleteSuccess": "صارف حذف کردیا گیا",
+    "deleteNotFound": "صارف نہیں ملا",
+    "deleteFail": "صارف حذف کرنے میں ناکام",
+    "exportJobCreated": "برآمدی کام کامیابی سے تخلیق کیا گیا",
+    "exportJobCreateFail": "برآمدی کام تخلیق کرنے میں ناکام",
+    "somethingWentWrong": "کچھ غلط ہوگیا۔"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "title": "Export Jobs",
+  "breadcrumb": {
+    "home": "Home",
+    "jobs": "Jobs"
+  },
+  "table": {
+    "entity": "Entity",
+    "status": "Status",
+    "createdAt": "Created At",
+    "actions": "Actions"
+  },
+  "filters": {
+    "search": {
+      "label": "Search Customer",
+      "placeholder": "Search by customer name, email or phone"
+    }
+  },
+  "messages": {
+    "loading": "Loading jobs...",
+    "noData": "No jobs found."
+  },
+  "confirmDeleteModal": {
+    "title": "Delete Job",
+    "message": "Are you sure you want to delete this job?",
+    "actions": {
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "Jobs fetched successfully",
+    "fetchFail": "Failed to fetch jobs",
+    "unauthorized": "Your session is invalid or you are not authorized to perform this action.",
+    "notFound": "Job not found",
+    "deleteSuccess": "Job deleted successfully",
+    "deleteNotFound": "Job not found",
+    "deleteFail": "Failed to delete job",
+    "exportJobCreated": "Export job created successfully",
+    "exportJobCreateFail": "Failed to create export job",
+    "somethingWentWrong": "Something went wrong.",
+    "downloadNotAvailable": "Download not available",
+    "downloadStarted": "Download started successfully",
+    "downloadFail": "Failed to download file"
+  }
+}

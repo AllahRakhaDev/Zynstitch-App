@@ -1,0 +1,113 @@
+{
+  "title": "Orders",
+  "breadcrumb": {
+    "home": "Home",
+    "orders": "Orders"
+  },
+  "addOrder": "Add Order",
+  "exportOrders": "Export",
+  "filters": {
+    "search": {
+      "label": "Search Orders",
+      "placeholder": "Search by order number, customer or status"
+    },
+    "status": {
+      "label": "Status",
+      "placeholder": "Select status"
+    },
+    "date": {
+      "label": "Date",
+      "placeholder": "Select date"
+    }
+  },
+  "table": {
+    "orderNumber": "Order No",
+    "customerName": "Customer Name",
+    "customerPhone": "Customer Phone",
+    "price": "Price",
+    "advancePaid": "Advance Paid",
+    "status": "Status",
+    "orderDate": "Order Date",
+    "dueDate": "Due Date",
+    "notes": "Notes",
+    "actions": "Actions"
+  },
+  "status": {
+    "all": "All",
+    "pending": "Pending",
+    "in_progress": "In Progress",
+    "completed": "Completed",
+    "delivered": "Delivered"
+  },
+  "modal": {
+    "createTitle": "Add Order",
+    "updateTitle": "Update Order",
+    "viewTitle": "View Order",
+    "fields": {
+      "customer": "Customer",
+      "orderNumber": "Order Number",
+      "status": "Status",
+      "price": "Price",
+      "advancePaid": "Advance Paid",
+      "orderDate": "Order Date",
+      "dueDate": "Due Date",
+      "notes": "Notes"
+    },
+    "actions": {
+      "create": "Create",
+      "update": "Update",
+      "creating": "Creating...",
+      "updating": "Updating...",
+      "cancel": "Cancel"
+    }
+  },
+  "section": {
+    "orderInfo": "Order Information",
+    "customerInfo": "Customer Information",
+    "paymentInfo": "Payment Information"
+  },
+  "form": {
+    "validation": {
+      "customerRequired": "Customer is required",
+      "orderNumberRequired": "Order number is required",
+      "statusRequired": "Status is required",
+      "priceRequired": "Price is required",
+      "advancePaidRequired": "Advance paid is required",
+      "orderDateRequired": "Order date is required",
+      "dueDateRequired": "Due date is required",
+      "dueDateAfterOrderDate": "Due date should be equal to or after order date"
+    }
+  },
+  "confirmDeleteModal": {
+    "title": "Delete Order",
+    "message": "Are you sure you want to delete this order?",
+    "actions": {
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    }
+  },
+  "confirmExportModal": {
+    "title": "Export Orders",
+    "message": "Are you sure you want to export orders data?",
+    "actions": {
+      "confirm": "Export",
+      "cancel": "Cancel"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "Orders fetched successfully",
+    "fetchFail": "Failed to fetch orders",
+    "unauthorized": "Your session is invalid or you are not authorized to perform this action.",
+    "notFound": "Order not found",
+    "duplicate": "An order with the same details already exists",
+    "createSuccess": "Order created successfully",
+    "updateSuccess": "Order updated successfully",
+    "saveFail": "Failed to save order",
+    "deleteSuccess": "Order deleted successfully",
+    "deleteNotFound": "Order not found",
+    "deleteFail": "Failed to delete order",
+    "exportJobCreated": "Export job created successfully",
+    "exportJobCreateFail": "Failed to create export job",
+    "somethingWentWrong": "Something went wrong."
+  }
+}

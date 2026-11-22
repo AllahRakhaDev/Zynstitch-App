@@ -5,6 +5,8 @@ import { Alert, Animated, Modal, Platform, Pressable, ScrollView, StyleSheet, Vi
 import { Text } from 'react-native-paper';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { useTranslation } from 'react-i18next';
+
 import { BOTTOM_TABS, getMoreMenuSections } from '@/constants/menu';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
@@ -16,6 +18,7 @@ export const unstable_settings = {
 };
 
 export default function AppTabsLayout() {
+  const { t } = useTranslation('sidebar');
   const colors = useTheme();
   const insets = useSafeAreaInsets();
   const { width: screenWidth } = useWindowDimensions();
@@ -38,11 +41,11 @@ export default function AppTabsLayout() {
   }, [drawerVisible, drawerProgress]);
 
   const optionsFor = (item: (typeof BOTTOM_TABS)[number], more = false) => ({
-    title: item.label,
-    tabBarAccessibilityLabel: item.label,
+    title: t(`sidebar.${item.label}`),
+    tabBarAccessibilityLabel: t(`sidebar.${item.label}`),
     tabBarLabel: ({ focused }: { focused: boolean }) =>
       focused || (more && drawerVisible) ? (
-        <Text style={[styles.activeLabel, { color: colors.primary }]}>{item.label}</Text>
+        <Text style={[styles.activeLabel, { color: colors.primary }]}>{t(`sidebar.${item.label}`)}</Text>
       ) : null,
     tabBarIcon: ({ focused, size }: { focused: boolean; size: number }) => (
       <MaterialCommunityIcons
