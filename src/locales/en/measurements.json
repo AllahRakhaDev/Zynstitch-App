@@ -1,0 +1,116 @@
+{
+  "title": "Measurements",
+  "page": {
+    "createTitle": "Create Measurement",
+    "updateTitle": "Update Measurement"
+  },
+  "section": {
+    "customerTitle": "Customer Information",
+    "measurementTitle": "Measurement Details",
+    "designTitle": "Design & Customization"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "measurements": "Measurements",
+    "create": "Create",
+    "update": "Update"
+  },
+  "addMeasurement": "Add Measurement",
+  "exportMeasurements": "Export",
+  "filters": {
+    "search": {
+      "label": "Search measurements",
+      "placeholder": "Search by measurement name, customer name or phone"
+    },
+    "date": {
+      "label": "Date",
+      "placeholder": "Select date"
+    }
+  },
+  "table": {
+    "name": "Name",
+    "customerName": "Customer",
+    "phone": "Phone",
+    "notes": "Notes",
+    "measurementDate": "Measurement Date",
+    "actions": "Actions",
+    "measurementName": "Measurement Name"
+  },
+  "form": {
+    "measurementName": "Measurement Name",
+    "customer": "Customer",
+    "phone": "Phone (optional)",
+    "measurementDate": "Measurement Date",
+    "notes": "Notes",
+    "yes": "Yes",
+    "no": "No",
+    "collarStylePlaceholder": "Select collar style",
+    "fields": {
+      "kameezLength": "Kameez Length (قمیض لمبائی)",
+      "sleeveLength": "Sleeve (بازو)",
+      "shoulderWidth": "Shoulder (تیرا)",
+      "neck": "Neck (گلا)",
+      "chest": "Chest (چھاتی)",
+      "waist": "Waist (کمر)",
+      "bottomWidth": "Bottom Width (گھیرا)",
+      "shalwarLength": "Shalwar (شلوار)",
+      "bottomOpening": "Bottom Opening (پانچہ)",
+      "cuff": "Cuff (کف)",
+      "collarStyle": "Collar / Ban (کالر / بین)",
+      "hasChakPattiKaaj": "Chak Patti Kaaj (چاک پٹی کاج)",
+      "hasChestPocket": "Chest Pocket (چھاتی جیب)",
+      "hasSidePockets": "Side Pockets (سائیڈ جیب)",
+      "hasShalwarPocket": "Shalwar Pocket (شلوار جیب)"
+    },
+    "collarStyles": {
+      "noCollar": "No Collar",
+      "collar": "Collar",
+      "ban": "Ban",
+      "other": "Other"
+    },
+    "actions": {
+      "create": "Create",
+      "update": "Update",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "dateFutureOnly": "Date must be today or in the future"
+  },
+  "confirmDeleteModal": {
+    "title": "Delete Measurement",
+    "message": "Are you sure you want to delete this measurement?",
+    "actions": {
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    }
+  },
+  "confirmExportModal": {
+    "title": "Export Measurements",
+    "message": "Are you sure you want to export measurements data?",
+    "actions": {
+      "confirm": "Export",
+      "cancel": "Cancel"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "Measurements fetched successfully",
+    "fetchFail": "Failed to fetch measurements",
+    "unauthorized": "Your session is invalid or you are not authorized to perform this action.",
+    "notFound": "Measurement not found",
+    "createSuccess": "Measurement created successfully",
+    "updateSuccess": "Measurement updated successfully",
+    "saveFail": "Failed to save measurement",
+    "deleteSuccess": "Measurement deleted successfully",
+    "deleteNotFound": "Measurement not found",
+    "deleteFail": "Failed to delete measurement",
+    "exportJobCreated": "Export job created successfully",
+    "exportJobCreateFail": "Failed to create export job",
+    "somethingWentWrong": "Something went wrong."
+  },
+  "downloadPdf": {
+    "generatedOn": "Generated On"
+  }
+}

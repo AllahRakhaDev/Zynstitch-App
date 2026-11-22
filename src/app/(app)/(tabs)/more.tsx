@@ -2,6 +2,11 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { usePathname, useRouter } from 'expo-router';
 import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider, Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import i18n from '@/i18n.config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { I18nManager } from 'react-native';
+
 
 import { getMoreMenuSections } from '@/constants/menu';
 import { Spacing } from '@/constants/theme';
@@ -10,11 +15,28 @@ import { useSession } from '@/providers/AuthProvider';
 import { ROLES } from '@/types/users.types';
 
 export default function MoreScreen() {
+  const { t } = useTranslation(['sidebar', 'common']);
   const colors = useTheme();
   const router = useRouter();
   const pathname = usePathname();
   const { user, signOut } = useSession();
   const sections = getMoreMenuSections(user?.role ?? ROLES.ADMIN);
+
+  const toggleLanguage = async () => {
+    const newLang = i18n.language === 'en' ? 'ur' : 'en';
+    await i18n.changeLanguage(newLang);
+    await AsyncStorage.setItem('lang', newLang);
+    
+    if (newLang === 'ur') {
+        I18nManager.forceRTL(true);
+        I18nManager.allowRTL(true);
+    } else {
+        I18nManager.forceRTL(false);
+        I18nManager.allowRTL(false);
+    }
+    // Restart might be needed, but let's try just setting this.
+    // Expo.Updates.reloadAsync(); // This would require expo-updates.
+  };
 
   const confirmSignOut = () => {
     Alert.alert('Sign out', 'Are you sure you want to sign out?', [
@@ -28,20 +50,27 @@ export default function MoreScreen() {
       style={[styles.page, { backgroundColor: colors.background }]}
       contentContainerStyle={styles.content}
     >
-      <Text variant="headlineSmall" style={styles.title}>More</Text>
+      <Text variant="headlineSmall" style={styles.title}>{t('sidebar.More')}</Text>
       <Text variant="bodyMedium" style={{ color: colors.textSecondary }}>
-        Additional workspace and account options.
+        {t('common.moreDescription', 'Additional workspace and account options.')}
       </Text>
 
       {sections.map((section) => (
         <View key={section.title} style={styles.section}>
           <Text variant="labelLarge" style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            {section.title}
+            {t(`common.${section.title}`, section.title)}
           </Text>
           <View style={[styles.menuCard, { backgroundColor: colors.surface, borderColor: colors.outline }]}>
             {section.items.map((item, index) => {
               const active = 'href' in item && pathname === item.href;
-              const onPress = 'action' in item ? confirmSignOut : () => router.push(item.href);
+              const onPress = 'action' in item 
+                ? (item.action === 'toggleLanguage' ? toggleLanguage : confirmSignOut) 
+                : () => router.push(item.href);
+              
+              const labelKey = 'action' in item && ['profile', 'language', 'logout'].includes(item.label)
+                ? `sidebarUserMenu.${item.label}`
+                : `sidebar.${item.label}`;
+
               return (
                 <View key={'href' in item ? item.href : item.action}>
                   {index ? <Divider /> : null}
@@ -58,16 +87,16 @@ export default function MoreScreen() {
                     <MaterialCommunityIcons
                       name={item.icon}
                       size={22}
-                      color={active ? colors.primary : 'action' in item ? '#b3261e' : colors.text}
+                      color={active ? colors.primary : 'action' in item && item.action !== 'toggleLanguage' ? '#b3261e' : colors.text}
                     />
                     <Text
                       variant="titleSmall"
                       style={[
                         styles.menuLabel,
-                        { color: active ? colors.primary : 'action' in item ? '#b3261e' : colors.text },
+                        { color: active ? colors.primary : 'action' in item && item.action !== 'toggleLanguage' ? '#b3261e' : colors.text },
                       ]}
                     >
-                      {item.label}
+                      {t(labelKey)}
                     </Text>
                     {'action' in item ? null : (
                       <MaterialCommunityIcons name="chevron-right" size={20} color={colors.textSecondary} />

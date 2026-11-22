@@ -1,0 +1,20 @@
+{
+    "toolBarTitle": "Zynstitch",
+    "sidebar": {
+        "Customers": "Customers",
+        "Orders": "Orders",
+        "Products": "Products",
+        "Measurements": "Measurements",
+        "Jobs": "Jobs",
+        "Users": "Users",
+        "Settings": "Settings",
+        "Dashboard": "Dashboard",
+        "More": "More"
+    },
+    "sidebarUserMenu": {
+        "profile": "Profile",
+        "toggle_theme": "Toggle Theme",
+        "language": "Language",
+        "logout": "Logout"
+    }
+}

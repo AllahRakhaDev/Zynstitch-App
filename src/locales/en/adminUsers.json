@@ -1,0 +1,91 @@
+{
+  "title": "Users",
+  "breadcrumb": {
+    "home": "Home",
+    "users": "Users"
+  },
+  "table": {
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "companyName": "Company Name",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "addUser": "Add User",
+  "runJobsCron": "Run Jobs Cron",
+  "runJobsCronRunning": "Running...",
+  "role": {
+    "ADMIN": "Admin",
+    "SUPER_ADMIN": "Super Admin"
+  },
+  "status": {
+    "ACTIVE": "Active",
+    "BLOCKED": "Blocked"
+  },
+  "filters": {
+    "search": {
+      "label": "Search User",
+      "placeholder": "Search by name, email or company"
+    },
+    "role": {
+      "label": "Role",
+      "all": "All Roles"
+    },
+    "status": {
+      "label": "Status",
+      "all": "All Statuses"
+    }
+  },
+  "modal": {
+    "createTitle": "Add User",
+    "updateTitle": "Update User",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "passwordOptional": "Password (leave blank to keep current)",
+      "role": "Role",
+      "companyName": "Company Name",
+      "status": "Status"
+    },
+    "errors": {
+      "invalidEmail": "Invalid email address",
+      "passwordMin": "Password must be at least 6 characters"
+    },
+    "actions": {
+      "create": "Create",
+      "update": "Update",
+      "creating": "Creating...",
+      "updating": "Updating...",
+      "cancel": "Cancel",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    }
+  },
+  "confirmDeleteModal": {
+    "title": "Delete User",
+    "message": "Are you sure you want to delete this user?",
+    "actions": {
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    }
+  },
+  "serviceMessages": {
+    "fetchSuccess": "Users fetched successfully",
+    "fetchFail": "Failed to fetch users",
+    "forbidden": "You do not have permission to perform this action",
+    "duplicate": "A user with this email already exists",
+    "passwordRequired": "Password is required when creating a user",
+    "createSuccess": "User created successfully",
+    "updateSuccess": "User updated successfully",
+    "saveFail": "Failed to save user",
+    "deleteSuccess": "User deleted successfully",
+    "deleteNotFound": "User not found",
+    "deleteFail": "Failed to delete user",
+    "cannotDeleteSelf": "You cannot delete your own account",
+    "cronNotConfigured": "Jobs cron service is not configured",
+    "cronTriggerSuccess": "Jobs cron started successfully",
+    "cronTriggerFail": "Failed to start jobs cron"
+  }
+}
