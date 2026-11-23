@@ -19,6 +19,8 @@ import {
   Text,
   TextInput,
 } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BackArrowButton } from '@/components/shared/BackArrowButton';
@@ -93,6 +95,7 @@ export function CollectionTableScreen({
   saveRowRemote,
   deleteRowRemote,
 }: Props) {
+  const { t } = useTranslation('common');
   const colors = useTheme();
   const insets = useSafeAreaInsets();
   const { showSuccess, showError } = useSnackbar();
@@ -179,7 +182,7 @@ export function CollectionTableScreen({
   const saveRow = async () => {
     const missing = fields.find((field) => field.required && !field.hideOnEdit && !String(formValues[field.key] ?? '').trim());
     if (missing) {
-      showError(`${missing.label} is required.`);
+      showError(`${missing.label} ${t('isRequired', { defaultValue: 'is required.' })}`);
       return;
     }
 
@@ -228,13 +231,13 @@ export function CollectionTableScreen({
     setEditingRow(null);
     setFormValues({});
     setTotal((current) => (editingRow ? current : current + 1));
-    showSuccess(`${singularTitle} ${editingRow ? 'updated' : 'added'} successfully.`);
+    showSuccess(t(editingRow ? 'updatedSuccessfully' : 'addedSuccessfully', { singularTitle }));
     if (saveRowRemote && !editingRow) void refreshRows();
   };
 
   const removeRow = (row: CollectionRow) => {
-    Alert.alert(`Delete ${singularTitle.toLowerCase()}?`, 'This action cannot be undone.', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('deleteConfirmTitle', { singularTitle }), t('cannotBeUndone'), [
+      { text: t('cancel'), style: 'cancel' },
       {
         text: 'Delete',
         style: 'destructive',
@@ -267,11 +270,11 @@ export function CollectionTableScreen({
         columns.map((column) => csvValue(row[column.key])).join(','),
       );
       await Share.share({
-        title: `Export ${title}`,
+        title: t('Export') + ' ' + title,
         message: [headers.map(csvValue).join(','), ...csvRows].join('\n'),
       });
     } catch {
-      showError(`Unable to export ${title.toLowerCase()}.`);
+      showError(t('UnableToExport', { title }));
     }
   };
 
@@ -283,32 +286,32 @@ export function CollectionTableScreen({
           <View style={styles.titleCopy}>
             <Text variant="headlineSmall" style={styles.title}>{title}</Text>
             <Text variant="bodySmall" style={{ color: colors.textSecondary }}>
-              {filteredRows.length} of {total} records
+              {filteredRows.length} {t('of', { defaultValue: 'of' })} {total} {t('records')}
             </Text>
           </View>
         </View>
 
         <View style={[styles.headerActions, { marginBottom: Spacing.two }]}>
           {canExport ? (
-            <Button mode="outlined" icon="download-outline" onPress={() => void exportRows()} compact>
-              Export
+            <Button mode="outlined" icon="download-outline" onPress={() => void exportRows()} compact> 
+              {t('Export')}
             </Button>
           ) : null}
           {canAdd ? (
-            <Button mode="contained" icon="plus" onPress={openCreate} compact>
-              Add {singularTitle}
+            <Button mode="contained" icon="plus" onPress={openCreate} compact> 
+              {t('Add')} {singularTitle}
             </Button>
           ) : null}
         </View>
       </View>
 
       <Searchbar
-        placeholder={`Search ${title.toLowerCase()}`}
+        placeholder={`${t('Search')} ${title.toLowerCase()}`}
         value={search}
         onChangeText={setSearch}
         style={[styles.search, { backgroundColor: colors.surface, borderColor: colors.outline }]}
       />
-      {loading ? <Text style={styles.loadState}>Loading {title.toLowerCase()}…</Text> : null}
+      {loading ? <Text style={styles.loadState}>{t('Loading')} {title.toLowerCase()}…</Text> : null}
       {loadError ? <Text style={styles.loadError}>{loadError}</Text> : null}
 
       <ScrollView horizontal showsHorizontalScrollIndicator>
@@ -325,7 +328,7 @@ export function CollectionTableScreen({
               </Text>
             ))}
             <Text variant="labelLarge" style={[styles.headerCell, { width: ACTIONS_WIDTH, color: colors.text }]}>
-              Actions
+              {t('Actions')}
             </Text>
           </View>
           <ScrollView style={styles.tableBody} nestedScrollEnabled>

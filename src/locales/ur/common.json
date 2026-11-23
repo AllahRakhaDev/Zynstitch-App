@@ -1,9 +1,3 @@
-{
-  "welcome": "خوش آمدید",
-  "resetFilters": "فلٹرز ری سیٹ",
-  "refresh": "تازہ کریں",
-  "moreDescription": "اضافی ورک اسپیس اور اکاؤنٹ کے اختیارات۔",
-  "Main navigation": "مرکزی نیویگیشن",
-  "Administration": "انتظامیہ",
-  "Account": "اکاؤنٹ"
-}
+{"welcome": "خوش آمدید","resetFilters": "فلٹرز ری سیٹ","refresh": "تازہ کریں","moreDescription": "اضافی ورک اسپیس اور اکاؤنٹ کے اختیارات۔","Main navigation": "مرکزی نیویگیشن","Administration": "انتظامیہ","Account": "اکاؤنٹ","records": "ریکارڈز","export": "برآمد کریں","add": "شامل کریں","search": "تلاش کریں","loading": "لوڈ ہو رہا ہے","actions": "عمل","yes": "جی ہاں","no": "نہیں","updated": "اپ ڈیٹ ہوگیا","added": "شامل ہوگیا","successfully": "کامیابی سے","deleteQuestion": "حذف کریں {{entity}}؟","cannotBeUndone": "اس عمل کو واپس نہیں لیا جا سکتا۔","cancel": "منسوخ کریں","delete": "حذف کریں","hello": "ہیلو","overview": "جائزہ","recentOrders": "حالیہ آرڈرز","viewAll": "تمام دیکھیں","isRequired": "ضروری ہے۔","Export": "برآمد کریں","Add": "شامل کریں","Search": "تلاش کریں","Loading": "لوڈ ہو رہا ہے","Actions": "عمل","Yes": "جی ہاں","No": "نہیں","deletedSuccessfully": "{{singularTitle}} حذف کردیا گیا۔","addedSuccessfully": "{{singularTitle}} کامیابی سے شامل کیا گیا۔","updatedSuccessfully": "{{singularTitle}} کامیابی سے اپ ڈیٹ ہوا۔","deleteConfirmTitle": "حذف کریں {{singularTitle}}؟","UnableToExport": "{{title}} برآمد کرنے سے قاصر ہے۔","UnableToSave": "{{singularTitle}} محفوظ کرنے سے قاصر ہے۔","UnableToDelete": "{{singularTitle}} حذف کرنے سے قاصر ہے۔","helloUser": "ہیلو، {{name}}","customers": "گاہک","orders": "آرڈرز","measurements": "پیمائش","viewCustomerRecords": "گاہکوں کا ریکارڈ دیکھیں","openMeasurementProfiles": "پیمائش پروفائلز کھولیں","jobs": "کام","trackExportsAndJobs": "برآمدات اور کاموں کو ٹریک کریں","moreOptions": "مزید اختیارات","settingsAndAccount": "ترتیبات اور اکاؤنٹ","order": "آرڈر","noOrders": "ابھی تک دکھانے کے لیے کوئی آرڈر نہیں ہے.",
+  "studioAtAGlance": "ایک نظر میں آپ کا اسٹوڈیو",
+  "keepOrganized": "گاہکوں، آرڈرز، اور درزی کے کام کو ایک جگہ منظم رکھیں۔","loadingOrders": "آپ کے آرڈر لوڈ ہو رہے ہیں..."}

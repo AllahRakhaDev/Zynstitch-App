@@ -1,22 +1,22 @@
+import i18n from '@/i18n.config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-    DarkTheme as NavigationDarkTheme,
-    DefaultTheme as NavigationDefaultTheme,
-    ThemeProvider as NavigationThemeProvider,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+  ThemeProvider as NavigationThemeProvider,
 } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-    type ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
 } from 'react';
 import { I18nManager, useColorScheme } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
-import i18n from '@/i18n.config';
 
 import { brandColors, getPaperTheme, type ThemeMode } from '@/theme';
 
@@ -69,6 +69,9 @@ export default function ThemeProvider({ children }: Props) {
         }
         if (!cancelled && (storedLanguage === 'en' || storedLanguage === 'ur')) {
           setLanguageState(storedLanguage);
+          i18n.changeLanguage(storedLanguage);
+          I18nManager.forceRTL(storedLanguage === 'ur');
+          I18nManager.allowRTL(storedLanguage === 'ur');
         }
       } finally {
         if (!cancelled) setHydrated(true);

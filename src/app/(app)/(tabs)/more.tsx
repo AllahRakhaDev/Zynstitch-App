@@ -1,14 +1,13 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { usePathname, useRouter } from 'expo-router';
-import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { Divider, Text } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
 import i18n from '@/i18n.config';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { I18nManager } from 'react-native';
+import { usePathname, useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import { Alert, I18nManager, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Divider, Text } from 'react-native-paper';
 
 
-import { getMoreMenuSections } from '@/constants/menu';
+import { getMoreMenuSections, type AppMenuActionItem } from '@/constants/menu';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useSession } from '@/providers/AuthProvider';
@@ -25,7 +24,7 @@ export default function MoreScreen() {
   const toggleLanguage = async () => {
     const newLang = i18n.language === 'en' ? 'ur' : 'en';
     await i18n.changeLanguage(newLang);
-    await AsyncStorage.setItem('lang', newLang);
+    await AsyncStorage.setItem('appLanguage', newLang);
     
     if (newLang === 'ur') {
         I18nManager.forceRTL(true);
@@ -64,7 +63,7 @@ export default function MoreScreen() {
             {section.items.map((item, index) => {
               const active = 'href' in item && pathname === item.href;
               const onPress = 'action' in item 
-                ? (item.action === 'toggleLanguage' ? toggleLanguage : confirmSignOut) 
+                ? ((item as AppMenuActionItem).action === 'toggleLanguage' ? toggleLanguage : confirmSignOut) 
                 : () => router.push(item.href);
               
               const labelKey = 'action' in item && ['profile', 'language', 'logout'].includes(item.label)
@@ -87,13 +86,13 @@ export default function MoreScreen() {
                     <MaterialCommunityIcons
                       name={item.icon}
                       size={22}
-                      color={active ? colors.primary : 'action' in item && item.action !== 'toggleLanguage' ? '#b3261e' : colors.text}
+                      color={active ? colors.primary : ('action' in item && (item as AppMenuActionItem).action !== 'toggleLanguage' ? '#b3261e' : colors.text)}
                     />
                     <Text
                       variant="titleSmall"
                       style={[
                         styles.menuLabel,
-                        { color: active ? colors.primary : 'action' in item && item.action !== 'toggleLanguage' ? '#b3261e' : colors.text },
+                        { color: active ? colors.primary : ('action' in item && (item as AppMenuActionItem).action !== 'toggleLanguage' ? '#b3261e' : colors.text) },
                       ]}
                     >
                       {t(labelKey)}
