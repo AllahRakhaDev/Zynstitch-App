@@ -3,7 +3,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { usePathname, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Alert, I18nManager, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider, Text } from 'react-native-paper';
 
 
@@ -26,13 +26,6 @@ export default function MoreScreen() {
     await i18n.changeLanguage(newLang);
     await AsyncStorage.setItem('appLanguage', newLang);
     
-    if (newLang === 'ur') {
-        I18nManager.forceRTL(true);
-        I18nManager.allowRTL(true);
-    } else {
-        I18nManager.forceRTL(false);
-        I18nManager.allowRTL(false);
-    }
     // Restart might be needed, but let's try just setting this.
     // Expo.Updates.reloadAsync(); // This would require expo-updates.
   };

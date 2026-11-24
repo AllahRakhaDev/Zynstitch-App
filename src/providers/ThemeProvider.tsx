@@ -70,8 +70,8 @@ export default function ThemeProvider({ children }: Props) {
         if (!cancelled && (storedLanguage === 'en' || storedLanguage === 'ur')) {
           setLanguageState(storedLanguage);
           i18n.changeLanguage(storedLanguage);
-          I18nManager.forceRTL(storedLanguage === 'ur');
-          I18nManager.allowRTL(storedLanguage === 'ur');
+          I18nManager.forceRTL(false);
+          I18nManager.allowRTL(false);
         }
       } finally {
         if (!cancelled) setHydrated(true);
@@ -104,13 +104,8 @@ export default function ThemeProvider({ children }: Props) {
   const setLanguage = useCallback((next: AppLanguage) => {
     setLanguageState(next);
     i18n.changeLanguage(next);
-    if (next === 'ur') {
-        I18nManager.forceRTL(true);
-        I18nManager.allowRTL(true);
-    } else {
-        I18nManager.forceRTL(false);
-        I18nManager.allowRTL(false);
-    }
+    I18nManager.forceRTL(false);
+    I18nManager.allowRTL(false);
   }, []);
 
   const toggleTheme = useCallback(() => {
