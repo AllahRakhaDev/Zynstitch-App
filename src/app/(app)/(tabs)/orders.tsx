@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
 import { deleteOrder, fetchAllCustomers, fetchAllMeasurements, fetchAllOrders, saveOrder } from '@/api';
 import { CollectionTableScreen } from '@/components/shared/CollectionTableScreen';
-import type { IOrder } from '@/types/orders.types';
 import type { ICustomer } from '@/types/customer.types';
+import type { IOrder } from '@/types/orders.types';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const defaultOrderDate = new Date().toISOString().slice(0, 10);
 const defaultDueDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
 export default function OrdersScreen() {
+  const { t } = useTranslation('orders');
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [measurements, setMeasurements] = useState<{ label: string; value: string }[]>([]);
 
@@ -39,8 +41,8 @@ export default function OrdersScreen() {
 
   return (
     <CollectionTableScreen
-      title="Orders"
-      singularTitle="Order"
+      title={t('title')}
+      singularTitle={t('modal.viewTitle')}
       entity="orders"
       initialData={[]}
       loadRows={loadOrders}
@@ -65,10 +67,10 @@ export default function OrdersScreen() {
         return { success: response.success, message: response.message, data: response.data };
       }}
       fields={[
-        { key: 'orderNumber', label: 'Order number', type: 'text', required: true },
+        { key: 'orderNumber', label: t('modal.fields.orderNumber'), type: 'text', required: true },
         {
           key: 'customerId',
-          label: 'Customer',
+          label: t('modal.fields.customer'),
           type: 'select',
           required: true,
           options: customers.map(c => ({ label: c.name, value: c._id ?? '' })),
@@ -81,31 +83,31 @@ export default function OrdersScreen() {
         },
         {
           key: 'status',
-          label: 'Status',
+          label: t('modal.fields.status'),
           type: 'select',
           options: [
-            { label: 'Pending', value: 'pending' },
-            { label: 'In progress', value: 'in_progress' },
-            { label: 'Completed', value: 'completed' },
-            { label: 'Delivered', value: 'delivered' },
+            { label: t('status.pending'), value: 'pending' },
+            { label: t('status.in_progress'), value: 'in_progress' },
+            { label: t('status.completed'), value: 'completed' },
+            { label: t('status.delivered'), value: 'delivered' },
           ],
         },
-        { key: 'price', label: 'Price', type: 'number', required: true },
-        { key: 'advancePaid', label: 'Advance paid', type: 'number', required: true, defaultValue: '0' },
-        { key: 'orderDate', label: 'Order date', type: 'date', required: true, defaultValue: defaultOrderDate },
-        { key: 'dueDate', label: 'Due date', type: 'date', required: true, defaultValue: defaultDueDate },
-        { key: 'notes', label: 'Notes', type: 'text' },
+        { key: 'price', label: t('modal.fields.price'), type: 'number', required: true },
+        { key: 'advancePaid', label: t('modal.fields.advancePaid'), type: 'number', required: true, defaultValue: '0' },
+        { key: 'orderDate', label: t('modal.fields.orderDate'), type: 'date', required: true, defaultValue: defaultOrderDate },
+        { key: 'dueDate', label: t('modal.fields.dueDate'), type: 'date', required: true, defaultValue: defaultDueDate },
+        { key: 'notes', label: t('modal.fields.notes'), type: 'text' },
       ]}
       columns={[
-        { key: 'orderNumber', label: 'Order number', width: 140 },
-        { key: 'customerName', label: 'Customer', width: 150 },
-        { key: 'customerPhone', label: 'Phone', width: 140 },
-        { key: 'price', label: 'Price', width: 100 },
-        { key: 'advancePaid', label: 'Advance', width: 110 },
-        { key: 'status', label: 'Status', width: 125 },
-        { key: 'orderDate', label: 'Order date', width: 130 },
-        { key: 'dueDate', label: 'Due date', width: 130 },
-        { key: 'notes', label: 'Notes', width: 180 },
+        { key: 'orderNumber', label: t('table.orderNumber'), width: 140 },
+        { key: 'customerName', label: t('table.customerName'), width: 150 },
+        { key: 'customerPhone', label: t('table.customerPhone'), width: 140 },
+        { key: 'price', label: t('table.price'), width: 100 },
+        { key: 'advancePaid', label: t('table.advancePaid'), width: 110 },
+        { key: 'status', label: t('table.status'), width: 125 },
+        { key: 'orderDate', label: t('table.orderDate'), width: 130 },
+        { key: 'dueDate', label: t('table.dueDate'), width: 130 },
+        { key: 'notes', label: t('table.notes'), width: 180 },
       ]}
       prepareRow={(values) => {
         const customer = customers.find((item) => item._id === values.customerId);
