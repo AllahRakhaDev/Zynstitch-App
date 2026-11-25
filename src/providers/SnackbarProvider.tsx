@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { Snackbar } from 'react-native-paper';
 
-import { t } from '@/i18n/en';
+import i18n from '@/i18n.config';
 
 type SnackKind = 'success' | 'error' | 'info';
 
@@ -34,7 +34,12 @@ export default function SnackbarProvider({ children }: { children: ReactNode }) 
   const [kind, setKind] = useState<SnackKind>('info');
 
   const show = useCallback((text: string, nextKind: SnackKind) => {
-    setMessage(t(text));
+    setMessage(
+      i18n.t(text, {
+        ns: ['users', 'common', 'customers', 'orders', 'measurements', 'jobs', 'adminUsers'],
+        defaultValue: text,
+      }),
+    );
     setKind(nextKind);
     setVisible(true);
   }, []);

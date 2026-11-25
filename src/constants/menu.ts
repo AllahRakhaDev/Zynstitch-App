@@ -20,6 +20,15 @@ export type AppMenuActionItem = {
 
 export type AppMenuUnion = AppMenuItem | AppMenuActionItem;
 
+const USER_MENU_LABELS = new Set(['Profile', 'Language', 'Logout']);
+
+export function getMenuItemLabelKey(label: string) {
+  if (USER_MENU_LABELS.has(label)) {
+    return `sidebarUserMenu.${label.toLowerCase()}`;
+  }
+  return `sidebar.${label}`;
+}
+
 export const BOTTOM_TABS = [
   { label: 'Dashboard', href: '/', icon: 'view-dashboard-outline' },
   { label: 'Customers', href: '/customers', icon: 'account-group' },
@@ -52,9 +61,9 @@ export const MORE_MENU_SECTIONS: readonly {
   {
     title: 'Account',
     items: [
-      { label: 'profile', href: '/profile', icon: 'account-circle-outline' },
-      { label: 'language', action: 'toggleLanguage', icon: 'translate' },
-      { label: 'logout', action: 'logout', icon: 'logout' },
+      { label: 'Profile', href: '/profile', icon: 'account-circle-outline' },
+      { label: 'Language', action: 'toggleLanguage', icon: 'translate' },
+      { label: 'Logout', action: 'logout', icon: 'logout' },
     ],
   },
 ];

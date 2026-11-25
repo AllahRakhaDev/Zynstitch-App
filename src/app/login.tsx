@@ -1,23 +1,23 @@
 import { Link, router } from 'expo-router';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 
 import { AuthScreen } from '@/components/auth/AuthScreen';
 import { PasswordField } from '@/components/shared/PasswordField';
-import { Spacing } from '@/constants/theme';
-import { t } from '@/i18n/en';
 import { useSession } from '@/providers/AuthProvider';
 import { useSnackbar } from '@/providers/SnackbarProvider';
-import { loginSchema } from '@/validators/auth.validations';
+import { getLoginSchema } from '@/validators/auth.validations';
 
 export default function LoginScreen() {
+  const { t } = useTranslation('users');
   const { signIn } = useSession();
   const { showSuccess, showError } = useSnackbar();
 
   const formik = useFormik({
     initialValues: { email: '', password: '' },
-    validationSchema: loginSchema,
+    validationSchema: getLoginSchema(t),
     onSubmit: async (values, helpers) => {
       const result = await signIn(values);
       if (!result.success) {
@@ -25,17 +25,17 @@ export default function LoginScreen() {
         helpers.setSubmitting(false);
         return;
       }
-      showSuccess(t(result.message));
+      showSuccess(result.message);
       helpers.setSubmitting(false);
       router.replace('/');
     },
   });
 
   return (
-    <AuthScreen title="Sign In">
+    <AuthScreen title={t('login.title')}>
       <TextInput
         mode="outlined"
-        label="Email Address"
+        label={t('login.fields.email')}
         autoCapitalize="none"
         keyboardType="email-address"
         value={formik.values.email}
@@ -48,7 +48,7 @@ export default function LoginScreen() {
       ) : null}
 
       <PasswordField
-        label="Password"
+        label={t('login.fields.password')}
         value={formik.values.password}
         onChangeText={formik.handleChange('password')}
         onBlur={formik.handleBlur('password')}
@@ -59,7 +59,7 @@ export default function LoginScreen() {
       ) : null}
 
       <Link href="/forgot-password" style={styles.link}>
-        Forgot Password
+        {t('login.actions.forgotPassword')}
       </Link>
 
       <Button
@@ -67,13 +67,10 @@ export default function LoginScreen() {
         onPress={() => formik.handleSubmit()}
         loading={formik.isSubmitting}
         disabled={formik.isSubmitting}
+        contentStyle={styles.submit}
       >
-        Login
+        {t('login.actions.submit')}
       </Button>
-
-      <Text variant="bodySmall" style={styles.hint}>
-        Demo: admin@example.com / 123456
-      </Text>
     </AuthScreen>
   );
 }
@@ -87,9 +84,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     color: '#1565c0',
   },
-  hint: {
-    textAlign: 'center',
-    opacity: 0.7,
-    marginTop: Spacing.one,
+  submit: {
+    paddingVertical: 4,
   },
 });

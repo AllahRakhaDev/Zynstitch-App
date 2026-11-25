@@ -51,7 +51,8 @@
       "advancePaid": "Advance Paid",
       "orderDate": "Order Date",
       "dueDate": "Due Date",
-      "notes": "Notes"
+      "notes": "Notes",
+      "measurementOptional": "Measurement (optional)"
     },
     "actions": {
       "create": "Create",

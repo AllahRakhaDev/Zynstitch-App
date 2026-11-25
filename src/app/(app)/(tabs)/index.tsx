@@ -139,7 +139,7 @@ export default function DashboardScreen() {
             {index ? <View style={[styles.separator, { backgroundColor: colors.outline }]} /> : null}
             <View style={styles.orderRow}>
               <View style={{ flex: 1 }}>
-                <Text variant="titleSmall">{t('order')}: {order.orderNumber ?? 'Order'}</Text>
+                <Text variant="titleSmall">{t('order')}: {order.orderNumber ?? t('order')}</Text>
                 <Text variant="bodySmall" style={{ color: colors.textSecondary }}>
                   {order.customerName ?? order.customerId}
                 </Text>

@@ -77,7 +77,7 @@ export default function OrdersScreen() {
         },
         {
           key: 'measurementId',
-          label: 'Measurement (Optional)',
+          label: t('modal.fields.measurementOptional'),
           type: 'select',
           options: measurements,
         },

@@ -1,22 +1,23 @@
 import { Link, router, useLocalSearchParams } from 'expo-router';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 
 import { resetPassword } from '@/api';
 import { AuthScreen } from '@/components/auth/AuthScreen';
 import { PasswordField } from '@/components/shared/PasswordField';
-import { t } from '@/i18n/en';
 import { useSnackbar } from '@/providers/SnackbarProvider';
-import { resetPasswordSchema } from '@/validators/auth.validations';
+import { getResetPasswordSchema } from '@/validators/auth.validations';
 
 export default function ResetPasswordScreen() {
+  const { t } = useTranslation('users');
   const { token } = useLocalSearchParams<{ token?: string }>();
   const { showSuccess, showError } = useSnackbar();
 
   const formik = useFormik({
     initialValues: { password: '', confirmPassword: '' },
-    validationSchema: resetPasswordSchema,
+    validationSchema: getResetPasswordSchema(t),
     onSubmit: async (values, helpers) => {
       const response = await resetPassword(token ?? '', values.password);
       if (!response.success) {
@@ -24,7 +25,7 @@ export default function ResetPasswordScreen() {
         helpers.setSubmitting(false);
         return;
       }
-      showSuccess(t(response.message));
+      showSuccess(response.message);
       helpers.setSubmitting(false);
       router.replace('/login');
     },
@@ -32,16 +33,16 @@ export default function ResetPasswordScreen() {
 
   return (
     <AuthScreen
-      title="Reset Password"
-      description="Enter your new password below."
+      title={t('resetPassword.title')}
+      description={t('resetPassword.description')}
       footer={
         <Link href="/login" style={styles.link}>
-          Back to Sign In
+          {t('resetPassword.actions.backToLogin')}
         </Link>
       }
     >
       <PasswordField
-        label="New Password"
+        label={t('resetPassword.fields.password')}
         value={formik.values.password}
         onChangeText={formik.handleChange('password')}
         onBlur={formik.handleBlur('password')}
@@ -52,7 +53,7 @@ export default function ResetPasswordScreen() {
       ) : null}
 
       <PasswordField
-        label="Confirm Password"
+        label={t('resetPassword.fields.confirmPassword')}
         value={formik.values.confirmPassword}
         onChangeText={formik.handleChange('confirmPassword')}
         onBlur={formik.handleBlur('confirmPassword')}
@@ -68,7 +69,7 @@ export default function ResetPasswordScreen() {
         loading={formik.isSubmitting}
         disabled={formik.isSubmitting}
       >
-        Reset Password
+        {t('resetPassword.actions.submit')}
       </Button>
     </AuthScreen>
   );

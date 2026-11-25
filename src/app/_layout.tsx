@@ -6,6 +6,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import '@/i18n.config';
 
+import { useTranslation } from 'react-i18next';
+
 import { LoadingScreen } from '@/components/shared/LoadingScreen';
 import { AuthProvider, useSession } from '@/providers/AuthProvider';
 import SnackbarProvider from '@/providers/SnackbarProvider';
@@ -46,9 +48,10 @@ export default function RootLayout() {
 
 function RootNavigator() {
   const { session, isLoading } = useSession();
+  const { t } = useTranslation('common');
 
   if (isLoading) {
-    return <LoadingScreen message="Starting Zynstitch…" />;
+    return <LoadingScreen message={t('startingApp')} />;
   }
 
   return (

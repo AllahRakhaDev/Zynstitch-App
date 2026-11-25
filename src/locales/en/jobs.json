@@ -1,5 +1,6 @@
 {
   "title": "Export Jobs",
+  "singularTitle": "Job",
   "breadcrumb": {
     "home": "Home",
     "jobs": "Jobs"
@@ -8,6 +9,7 @@
     "entity": "Entity",
     "status": "Status",
     "createdAt": "Created At",
+    "fileName": "File name",
     "actions": "Actions"
   },
   "filters": {

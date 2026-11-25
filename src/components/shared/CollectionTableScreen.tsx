@@ -128,17 +128,17 @@ export function CollectionTableScreen({
     try {
       const response = await loadRows(search.trim());
       if (!response.success) {
-        setLoadError(response.message || `Unable to load ${title.toLowerCase()}.`);
+        setLoadError(response.message || t('unableToLoad', { title }));
         return;
       }
       setRows(response.items.map((row) => ({ ...row })));
       setTotal(response.total);
     } catch (error) {
-      setLoadError(error instanceof Error ? error.message : `Unable to load ${title.toLowerCase()}.`);
+      setLoadError(error instanceof Error ? error.message : t('unableToLoad', { title }));
     } finally {
       setLoading(false);
     }
-  }, [loadRows, search, title]);
+  }, [loadRows, search, t, title]);
 
   useEffect(() => {
     if (!loadRows) return;
@@ -210,13 +210,13 @@ export function CollectionTableScreen({
       try {
         const response = await saveRowRemote(convertedValues, editingRow);
         if (!response.success || !response.data) {
-          showError(response.message || `Unable to save ${singularTitle.toLowerCase()}.`);
+          showError(response.message || t('UnableToSave', { singularTitle }));
           setSaving(false);
           return;
         }
         saved = response.data as CollectionRow;
       } catch (error) {
-        showError(error instanceof Error ? error.message : `Unable to save ${singularTitle.toLowerCase()}.`);
+        showError(error instanceof Error ? error.message : t('UnableToSave', { singularTitle }));
         setSaving(false);
         return;
       }
@@ -239,24 +239,24 @@ export function CollectionTableScreen({
     Alert.alert(t('deleteConfirmTitle', { singularTitle }), t('cannotBeUndone'), [
       { text: t('cancel'), style: 'cancel' },
       {
-        text: 'Delete',
+        text: t('delete'),
         style: 'destructive',
         onPress: async () => {
           if (deleteRowRemote && typeof row._id === 'string') {
             try {
               const response = await deleteRowRemote(row._id);
               if (!response.success) {
-                showError(response.message || `Unable to delete ${singularTitle.toLowerCase()}.`);
+                showError(response.message || t('UnableToDelete', { singularTitle }));
                 return;
               }
             } catch (error) {
-              showError(error instanceof Error ? error.message : `Unable to delete ${singularTitle.toLowerCase()}.`);
+              showError(error instanceof Error ? error.message : t('UnableToDelete', { singularTitle }));
               return;
             }
           }
           setRows((current) => current.filter((item) => item._id !== row._id));
           setTotal((current) => Math.max(0, current - 1));
-          showSuccess(`${singularTitle} deleted.`);
+          showSuccess(t('deletedSuccessfully', { singularTitle }));
           if (deleteRowRemote) void refreshRows();
         },
       },
@@ -286,7 +286,7 @@ export function CollectionTableScreen({
           <View style={styles.titleCopy}>
             <Text variant="headlineSmall" style={styles.title}>{title}</Text>
             <Text variant="bodySmall" style={{ color: colors.textSecondary }}>
-              {filteredRows.length} {t('of', { defaultValue: 'of' })} {total} {t('records')}
+              {filteredRows.length} {t('of')} {total} {t('records')}
             </Text>
           </View>
         </View>
@@ -349,27 +349,27 @@ export function CollectionTableScreen({
                       numberOfLines={2}
                       style={[styles.cell, { width: column.width ?? DEFAULT_COLUMN_WIDTH, color: colors.text }]}
                     >
-                      {displayValue(row[column.key])}
+                      {displayValue(row[column.key], t('Yes'), t('No'))}
                     </Text>
                   )
                 ))}
                 <View style={[styles.rowActions, { width: ACTIONS_WIDTH }]}>
                   {renderExtraActions ? renderExtraActions(row) : null}
                   {canView ? (
-                    <IconButton icon="eye-outline" size={19} accessibilityLabel={`View ${singularTitle}`} onPress={() => setViewingRow(row)} />
+                    <IconButton icon="eye-outline" size={19} accessibilityLabel={t('viewEntity', { singularTitle })} onPress={() => setViewingRow(row)} />
                   ) : null}
                   {canEdit ? (
-                    <IconButton icon="pencil-outline" size={19} accessibilityLabel={`Edit ${singularTitle}`} onPress={() => openEdit(row)} />
+                    <IconButton icon="pencil-outline" size={19} accessibilityLabel={t('editEntity', { singularTitle })} onPress={() => openEdit(row)} />
                   ) : null}
                   {canDelete ? (
-                    <IconButton icon="delete-outline" size={19} iconColor="#b3261e" accessibilityLabel={`Delete ${singularTitle}`} onPress={() => removeRow(row)} />
+                    <IconButton icon="delete-outline" size={19} iconColor="#b3261e" accessibilityLabel={t('deleteConfirmTitle', { singularTitle })} onPress={() => removeRow(row)} />
                   ) : null}
                 </View>
               </View>
             )) : (
               <View style={styles.emptyRow}>
                 <Text variant="bodyMedium" style={{ color: colors.textSecondary }}>
-                  No {title.toLowerCase()} found.
+                  {t('noRecordsFound', { title })}
                 </Text>
               </View>
             )}
@@ -379,7 +379,7 @@ export function CollectionTableScreen({
 
       <Portal>
         <Dialog visible={Boolean(editingRow) || Object.keys(formValues).length > 0} onDismiss={closeForm}>
-          <Dialog.Title>{editingRow ? `Edit ${singularTitle}` : `Add ${singularTitle}`}</Dialog.Title>
+          <Dialog.Title>{editingRow ? t('editEntity', { singularTitle }) : t('addEntity', { singularTitle })}</Dialog.Title>
           <Dialog.ScrollArea style={styles.dialogScrollArea}>
             <ScrollView contentContainerStyle={styles.formFields}>
               {fields
@@ -395,25 +395,25 @@ export function CollectionTableScreen({
             </ScrollView>
           </Dialog.ScrollArea>
           <Dialog.Actions>
-            <Button onPress={closeForm} disabled={saving}>Cancel</Button>
-            <Button mode="contained" onPress={saveRow} loading={saving}>Save</Button>
+            <Button onPress={closeForm} disabled={saving}>{t('cancel')}</Button>
+            <Button mode="contained" onPress={saveRow} loading={saving}>{t('save')}</Button>
           </Dialog.Actions>
         </Dialog>
 
         <Dialog visible={Boolean(viewingRow)} onDismiss={() => setViewingRow(null)}>
-          <Dialog.Title>{singularTitle} details</Dialog.Title>
+          <Dialog.Title>{t('entityDetails', { singularTitle })}</Dialog.Title>
           <Dialog.ScrollArea style={styles.dialogScrollArea}>
             <ScrollView contentContainerStyle={styles.detailFields}>
               {columns.filter((column) => column.key !== 'actions').map((column) => (
                 <View key={column.key} style={styles.detailRow}>
                   <Text variant="labelMedium" style={{ color: colors.textSecondary }}>{column.label}</Text>
-                  <Text variant="bodyMedium" selectable>{displayValue(viewingRow?.[column.key])}</Text>
+                  <Text variant="bodyMedium" selectable>{displayValue(viewingRow?.[column.key], t('Yes'), t('No'))}</Text>
                 </View>
               ))}
             </ScrollView>
           </Dialog.ScrollArea>
           <Dialog.Actions>
-            <Button onPress={() => setViewingRow(null)}>Close</Button>
+            <Button onPress={() => setViewingRow(null)}>{t('close')}</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>
@@ -491,13 +491,14 @@ function csvValue(value: unknown) {
   return `"${text.replaceAll('"', '""')}"`;
 }
 
-function displayValue(value: unknown) {
+function displayValue(value: unknown, yesLabel = 'Yes', noLabel = 'No') {
   if (value === undefined || value === null || value === '') return '—';
-  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (typeof value === 'boolean') return value ? yesLabel : noLabel;
   return String(value);
 }
 
 function StatusBadge({ value }: { value: string }) {
+  const { t } = useTranslation(['orders', 'adminUsers', 'common']);
   const normalized = value.toLowerCase();
   const palette = normalized === 'completed' || normalized === 'active'
     ? { background: '#e8f5e9', text: '#2e7d32' }
@@ -512,7 +513,9 @@ function StatusBadge({ value }: { value: string }) {
   return (
     <View style={[styles.statusBadge, { backgroundColor: palette.background }]}>
       <Text variant="labelSmall" style={{ color: palette.text, fontWeight: '700' }}>
-        {value.replaceAll('_', ' ')}
+        {t(`orders:status.${normalized}`, {
+          defaultValue: t(`adminUsers:status.${value}`, { defaultValue: value.replaceAll('_', ' ') }),
+        })}
       </Text>
     </View>
   );

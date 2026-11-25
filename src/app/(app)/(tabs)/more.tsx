@@ -1,16 +1,15 @@
-import i18n from '@/i18n.config';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { usePathname, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider, Text } from 'react-native-paper';
 
 
-import { getMoreMenuSections, type AppMenuActionItem } from '@/constants/menu';
+import { getMenuItemLabelKey, getMoreMenuSections, type AppMenuActionItem } from '@/constants/menu';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useSession } from '@/providers/AuthProvider';
+import { useThemeMode } from '@/providers/ThemeProvider';
 import { ROLES } from '@/types/users.types';
 
 export default function MoreScreen() {
@@ -19,21 +18,17 @@ export default function MoreScreen() {
   const router = useRouter();
   const pathname = usePathname();
   const { user, signOut } = useSession();
+  const { language, setLanguage } = useThemeMode();
   const sections = getMoreMenuSections(user?.role ?? ROLES.ADMIN);
 
-  const toggleLanguage = async () => {
-    const newLang = i18n.language === 'en' ? 'ur' : 'en';
-    await i18n.changeLanguage(newLang);
-    await AsyncStorage.setItem('appLanguage', newLang);
-    
-    // Restart might be needed, but let's try just setting this.
-    // Expo.Updates.reloadAsync(); // This would require expo-updates.
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'ur' : 'en');
   };
 
   const confirmSignOut = () => {
-    Alert.alert('Sign out', 'Are you sure you want to sign out?', [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Sign out', style: 'destructive', onPress: () => void signOut() },
+    Alert.alert(t('common:signOut'), t('common:signOutConfirm'), [
+      { text: t('common:cancel'), style: 'cancel' },
+      { text: t('common:signOut'), style: 'destructive', onPress: () => void signOut() },
     ]);
   };
 
@@ -44,13 +39,13 @@ export default function MoreScreen() {
     >
       <Text variant="headlineSmall" style={styles.title}>{t('sidebar.More')}</Text>
       <Text variant="bodyMedium" style={{ color: colors.textSecondary }}>
-        {t('common.moreDescription', 'Additional workspace and account options.')}
+        {t('common:moreDescription')}
       </Text>
 
       {sections.map((section) => (
         <View key={section.title} style={styles.section}>
           <Text variant="labelLarge" style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            {t(`common.${section.title}`, section.title)}
+            {t(`common:${section.title}`, section.title)}
           </Text>
           <View style={[styles.menuCard, { backgroundColor: colors.surface, borderColor: colors.outline }]}>
             {section.items.map((item, index) => {
@@ -59,9 +54,7 @@ export default function MoreScreen() {
                 ? ((item as AppMenuActionItem).action === 'toggleLanguage' ? toggleLanguage : confirmSignOut) 
                 : () => router.push(item.href);
               
-              const labelKey = 'action' in item && ['profile', 'language', 'logout'].includes(item.label)
-                ? `sidebarUserMenu.${item.label}`
-                : `sidebar.${item.label}`;
+              const labelKey = getMenuItemLabelKey(item.label);
 
               return (
                 <View key={'href' in item ? item.href : item.action}>
@@ -108,7 +101,7 @@ export default function MoreScreen() {
           </Text>
         </View>
         <View style={styles.accountCopy}>
-          <Text variant="titleSmall">{user?.name ?? 'User'}</Text>
+          <Text variant="titleSmall">{user?.name ?? t('common:user')}</Text>
           <Text variant="bodySmall" style={{ color: colors.textSecondary }}>{user?.email}</Text>
         </View>
       </View>

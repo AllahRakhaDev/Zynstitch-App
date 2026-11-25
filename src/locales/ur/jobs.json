@@ -1,5 +1,6 @@
 {
   "title": "ایکسپورٹ جابز",
+  "singularTitle": "جاب",
   "breadcrumb": {
     "home": "ہوم",
     "jobs": "کام"
@@ -8,6 +9,7 @@
     "entity": "اینٹیٹی",
     "status": "اسٹیٹس",
     "createdAt": "تخلیق کی تاریخ",
+    "fileName": "فائل کا نام",
     "actions": "عمل"
   },
   "filters": {

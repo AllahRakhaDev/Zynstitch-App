@@ -1,29 +1,46 @@
+import type { TFunction } from 'i18next';
 import * as Yup from 'yup';
 
-export const loginSchema = Yup.object({
-  email: Yup.string().email('Enter a valid email').required('Email is required'),
-  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
-});
+export const getLoginSchema = (t: TFunction) =>
+  Yup.object({
+    email: Yup.string()
+      .email(t('login.errors.invalidEmail', { ns: 'users' }))
+      .required(t('login.errors.emailRequired', { ns: 'users' })),
+    password: Yup.string()
+      .min(6, t('login.errors.passwordMin', { ns: 'users' }))
+      .required(t('login.errors.passwordRequired', { ns: 'users' })),
+  });
 
-export const forgotPasswordSchema = Yup.object({
-  email: Yup.string().email('Enter a valid email').required('Email is required'),
-});
+export const getForgotPasswordSchema = (t: TFunction) =>
+  Yup.object({
+    email: Yup.string()
+      .email(t('forgotPassword.errors.invalidEmail', { ns: 'users' }))
+      .required(t('forgotPassword.errors.emailRequired', { ns: 'users' })),
+  });
 
-export const resetPasswordSchema = Yup.object({
-  password: Yup.string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords must match')
-    .required('Confirm password is required'),
-});
+export const getResetPasswordSchema = (t: TFunction) =>
+  Yup.object({
+    password: Yup.string()
+      .min(6, t('resetPassword.errors.passwordMin', { ns: 'users' }))
+      .required(t('resetPassword.errors.passwordRequired', { ns: 'users' })),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password')], t('resetPassword.errors.passwordMismatch', { ns: 'users' }))
+      .required(t('resetPassword.errors.confirmPasswordRequired', { ns: 'users' })),
+  });
 
-export const changePasswordSchema = Yup.object({
-  currentPassword: Yup.string().required('Current password is required'),
-  newPassword: Yup.string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('New password is required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('newPassword')], 'Passwords must match')
-    .required('Confirm password is required'),
-});
+export const getChangePasswordSchema = (t: TFunction) =>
+  Yup.object({
+    currentPassword: Yup.string().required(
+      t('profile.changePassword.errors.currentPasswordRequired', { ns: 'users' }),
+    ),
+    newPassword: Yup.string()
+      .min(6, t('profile.changePassword.errors.passwordMin', { ns: 'users' }))
+      .required(t('profile.changePassword.errors.newPasswordRequired', { ns: 'users' })),
+    confirmPassword: Yup.string()
+      .oneOf(
+        [Yup.ref('newPassword')],
+        t('profile.changePassword.errors.passwordMismatch', { ns: 'users' }),
+      )
+      .required(t('profile.changePassword.errors.confirmPasswordRequired', { ns: 'users' })),
+  });
+
