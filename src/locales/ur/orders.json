@@ -51,7 +51,8 @@
       "advancePaid": "ایڈوانس ادائیگی",
       "orderDate": "آرڈر کی تاریخ",
       "dueDate": "مقررہ تاریخ",
-      "notes": "نوٹس"
+      "notes": "نوٹس",
+      "measurementOptional": "پیمائش (اختیاری)"
     },
     "actions": {
       "create": "بنائیں",

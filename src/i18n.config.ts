@@ -42,11 +42,9 @@ const resources = {
   },
 };
 
-const LANGUAGE_KEY = 'appLanguage';
-
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en', // default
+  lng: 'en',
   fallbackLng: 'en',
   interpolation: {
     escapeValue: false,
@@ -54,6 +52,10 @@ i18n.use(initReactI18next).init({
   supportedLngs: ['en', 'ur'],
   defaultNS: 'common',
   ns: ['common', 'customers', 'measurements', 'sidebar', 'users', 'orders', 'adminUsers', 'jobs'],
+  react: {
+    useSuspense: false,
+    bindI18n: 'languageChanged loaded',
+  },
 });
 
 export default i18n;

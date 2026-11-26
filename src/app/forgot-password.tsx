@@ -1,28 +1,29 @@
 import { Link } from 'expo-router';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 
 import { requestPasswordReset } from '@/api';
 import { AuthScreen } from '@/components/auth/AuthScreen';
-import { t } from '@/i18n/en';
 import { useSnackbar } from '@/providers/SnackbarProvider';
-import { forgotPasswordSchema } from '@/validators/auth.validations';
+import { getForgotPasswordSchema } from '@/validators/auth.validations';
 
 export default function ForgotPasswordScreen() {
+  const { t, i18n } = useTranslation('users');
   const { showSuccess, showError } = useSnackbar();
 
   const formik = useFormik({
     initialValues: { email: '' },
-    validationSchema: forgotPasswordSchema,
+    validationSchema: getForgotPasswordSchema(t),
     onSubmit: async (values, helpers) => {
-      const response = await requestPasswordReset(values.email, 'en');
+      const response = await requestPasswordReset(values.email, i18n.language);
       if (!response.success) {
         showError(response.message);
         helpers.setSubmitting(false);
         return;
       }
-      showSuccess(t(response.message));
+      showSuccess(response.message);
       helpers.resetForm();
       helpers.setSubmitting(false);
     },
@@ -30,17 +31,17 @@ export default function ForgotPasswordScreen() {
 
   return (
     <AuthScreen
-      title="Forgot Password"
-      description="Enter your email address and we will send you a link to reset your password."
+      title={t('forgotPassword.title')}
+      description={t('forgotPassword.description')}
       footer={
         <Link href="/login" style={styles.link}>
-          Back to Sign In
+          {t('forgotPassword.actions.backToLogin')}
         </Link>
       }
     >
       <TextInput
         mode="outlined"
-        label="Email Address"
+        label={t('forgotPassword.fields.email')}
         autoCapitalize="none"
         keyboardType="email-address"
         value={formik.values.email}
@@ -58,7 +59,7 @@ export default function ForgotPasswordScreen() {
         loading={formik.isSubmitting}
         disabled={formik.isSubmitting}
       >
-        Send Reset Link
+        {t('forgotPassword.actions.submit')}
       </Button>
     </AuthScreen>
   );

@@ -3,8 +3,10 @@ import { CollectionTableScreen } from '@/components/shared/CollectionTableScreen
 import type { ICustomer } from '@/types/customer.types';
 import type { IMeasurement } from '@/types/measurements.types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function MeasurementsScreen() {
+  const { t } = useTranslation('measurements');
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const today = new Date().toISOString().slice(0, 10);
 
@@ -29,8 +31,8 @@ export default function MeasurementsScreen() {
 
   return (
     <CollectionTableScreen
-      title="Measurements"
-      singularTitle="Measurement"
+      title={t('title')}
+      singularTitle={t('singularTitle')}
       entity="measurements"
       initialData={[]}
       loadRows={loadMeasurements}
@@ -49,52 +51,52 @@ export default function MeasurementsScreen() {
         return { success: response.success, message: response.message, data: response.data };
       }}
       fields={[
-        { key: 'measurementName', label: 'Measurement name', type: 'text', required: true },
+        { key: 'measurementName', label: t('form.measurementName'), type: 'text', required: true },
         {
           key: 'customerId',
-          label: 'Customer',
+          label: t('form.customer'),
           type: 'select',
           required: true,
-          options: customers.map(c => ({ label: c.name, value: c._id ?? '' })),
+          options: customers.map((c) => ({ label: c.name, value: c._id ?? '' })),
         },
-        { key: 'measurementDate', label: 'Measurement date', type: 'date', defaultValue: today },
+        { key: 'measurementDate', label: t('form.measurementDate'), type: 'date', defaultValue: today },
         ...[
-          ['kameezLength', 'Kameez length'],
-          ['sleeveLength', 'Sleeve length'],
-          ['shoulderWidth', 'Shoulder width'],
-          ['neck', 'Neck'],
-          ['chest', 'Chest'],
-          ['waist', 'Waist'],
-          ['bottomWidth', 'Bottom width'],
-          ['shalwarLength', 'Shalwar length'],
-          ['bottomOpening', 'Bottom opening'],
-          ['cuff', 'Cuff'],
-        ].map(([key, label]) => ({ key, label, type: 'number' as const })),
+          'kameezLength',
+          'sleeveLength',
+          'shoulderWidth',
+          'neck',
+          'chest',
+          'waist',
+          'bottomWidth',
+          'shalwarLength',
+          'bottomOpening',
+          'cuff',
+        ].map((key) => ({ key, label: t(`form.fields.${key}`), type: 'number' as const })),
         {
           key: 'collarStyle',
-          label: 'Collar style',
+          label: t('form.fields.collarStyle'),
           type: 'select',
           options: [
-            { label: 'No collar', value: 'noCollar' },
-            { label: 'Collar', value: 'collar' },
-            { label: 'Ban', value: 'ban' },
-            { label: 'Other', value: 'other' },
+            { label: t('form.collarStyles.noCollar'), value: 'noCollar' },
+            { label: t('form.collarStyles.collar'), value: 'collar' },
+            { label: t('form.collarStyles.ban'), value: 'ban' },
+            { label: t('form.collarStyles.other'), value: 'other' },
           ],
         },
-        { key: 'hasChakPattiKaaj', label: 'Chak patti kaaj', type: 'toggle' },
-        { key: 'hasChestPocket', label: 'Chest pocket', type: 'toggle' },
-        { key: 'hasSidePockets', label: 'Side pockets', type: 'toggle' },
-        { key: 'hasShalwarPocket', label: 'Shalwar pocket', type: 'toggle' },
-        { key: 'notes', label: 'Notes', type: 'text' },
+        { key: 'hasChakPattiKaaj', label: t('form.fields.hasChakPattiKaaj'), type: 'toggle' },
+        { key: 'hasChestPocket', label: t('form.fields.hasChestPocket'), type: 'toggle' },
+        { key: 'hasSidePockets', label: t('form.fields.hasSidePockets'), type: 'toggle' },
+        { key: 'hasShalwarPocket', label: t('form.fields.hasShalwarPocket'), type: 'toggle' },
+        { key: 'notes', label: t('form.notes'), type: 'text' },
       ]}
       columns={[
-        { key: 'measurementName', label: 'Measurement', width: 180 },
-        { key: 'customerName', label: 'Customer', width: 150 },
-        { key: 'customerPhone', label: 'Phone', width: 140 },
-        { key: 'measurementDate', label: 'Date', width: 130 },
-        { key: 'chest', label: 'Chest', width: 100 },
-        { key: 'waist', label: 'Waist', width: 100 },
-        { key: 'notes', label: 'Notes', width: 180 },
+        { key: 'measurementName', label: t('table.measurementName'), width: 180 },
+        { key: 'customerName', label: t('table.customerName'), width: 150 },
+        { key: 'customerPhone', label: t('table.phone'), width: 140 },
+        { key: 'measurementDate', label: t('table.measurementDate'), width: 130 },
+        { key: 'chest', label: t('form.fields.chest'), width: 100 },
+        { key: 'waist', label: t('form.fields.waist'), width: 100 },
+        { key: 'notes', label: t('table.notes'), width: 180 },
       ]}
       prepareRow={(values) => {
         const customer = customers.find((item) => item._id === values.customerId);

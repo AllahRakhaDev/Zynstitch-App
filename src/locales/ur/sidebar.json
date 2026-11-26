@@ -1,5 +1,5 @@
 {
-    "toolBarTitle": "ٹریک ٹیلر",
+    "toolBarTitle": "زائن اسٹچ",
     "sidebar": {
         "Customers": "گاہک",
         "Orders": "آرڈرز",
@@ -9,7 +9,10 @@
         "Users": "صارفین",
         "Settings": "ترتیبات",
         "Dashboard": "ڈیش بورڈ",
-        "More": "مزید"
+        "More": "مزید",
+        "Profile": "پروفائل",
+        "Language": "زبان",
+        "Logout": "لاگ آؤٹ"
     },
     "sidebarUserMenu": {
         "profile": "پروفائل",

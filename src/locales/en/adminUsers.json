@@ -1,5 +1,6 @@
 {
   "title": "Users",
+  "singularTitle": "User",
   "breadcrumb": {
     "home": "Home",
     "users": "Users"

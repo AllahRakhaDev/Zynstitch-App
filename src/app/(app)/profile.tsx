@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Avatar, Button, Divider, SegmentedButtons, Text, TextInput } from 'react-native-paper';
 import * as Yup from 'yup';
@@ -8,14 +9,14 @@ import { BackArrowButton } from '@/components/shared/BackArrowButton';
 import { PasswordField } from '@/components/shared/PasswordField';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
-import { t } from '@/i18n/en';
 import { useSession } from '@/providers/AuthProvider';
 import { useSnackbar } from '@/providers/SnackbarProvider';
 import { useThemeMode } from '@/providers/ThemeProvider';
-import { changePasswordSchema } from '@/validators/auth.validations';
+import { getChangePasswordSchema } from '@/validators/auth.validations';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function ProfileScreen() {
+  const { t } = useTranslation(['users', 'common', 'sidebar']);
   const colors = useTheme();
   const insets = useSafeAreaInsets();
   const { user, updateUser } = useSession();
@@ -30,7 +31,7 @@ export default function ProfileScreen() {
       companyName: user?.companyName ?? '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Name is required'),
+      name: Yup.string().required(t('profile.name') + ' ' + t('common:isRequired')),
     }),
     onSubmit: async (values, helpers) => {
       try {
@@ -41,9 +42,9 @@ export default function ProfileScreen() {
           return;
         }
         updateUser(response.data);
-        showSuccess(t(response.message));
+        showSuccess(response.message);
       } catch {
-        showError('Failed to update profile.');
+        showError(t('profile.updateError'));
       } finally {
         helpers.setSubmitting(false);
       }
@@ -52,7 +53,7 @@ export default function ProfileScreen() {
 
   const passwordForm = useFormik({
     initialValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
-    validationSchema: changePasswordSchema,
+    validationSchema: getChangePasswordSchema(t),
     onSubmit: async (values, helpers) => {
       try {
         const response = await changePassword(values.currentPassword, values.newPassword);
@@ -60,10 +61,10 @@ export default function ProfileScreen() {
           showError(response.message);
           return;
         }
-        showSuccess(t(response.message));
+        showSuccess(response.message);
         helpers.resetForm();
       } catch {
-        showError('Something went wrong. Please try again.');
+        showError(t('profile.changePassword.messages.unexpectedError'));
       } finally {
         helpers.setSubmitting(false);
       }
@@ -77,7 +78,7 @@ export default function ProfileScreen() {
     >
       <View style={styles.pageTitle}>
         <BackArrowButton fallbackHref="/" />
-        <Text variant="headlineSmall" style={styles.pageTitleText}>Profile</Text>
+        <Text variant="headlineSmall" style={styles.pageTitleText}>{t('sidebar:sidebarUserMenu.profile')}</Text>
       </View>
       <View style={[styles.accountCard, { backgroundColor: colors.surface, borderColor: colors.outline }]}>
         {profilePhotoUri ? (
@@ -90,7 +91,7 @@ export default function ProfileScreen() {
           />
         )}
         <View style={styles.accountCopy}>
-          <Text variant="titleMedium">{user?.name || 'User'}</Text>
+          <Text variant="titleMedium">{user?.name || t('common:user')}</Text>
           <Text variant="bodySmall" style={{ color: colors.textSecondary }}>
             {user?.email}
           </Text>
@@ -101,20 +102,20 @@ export default function ProfileScreen() {
       </View>
 
       <View style={[styles.section, { backgroundColor: colors.surface, borderColor: colors.outline }]}>
-        <Text variant="titleLarge">Appearance</Text>
+        <Text variant="titleLarge">{t('common:appearance')}</Text>
         <Text variant="bodyMedium" style={{ color: colors.textSecondary }}>
-          Choose how Zynstitch looks on this device.
+          {t('common:appearanceDescription')}
         </Text>
         <SegmentedButtons
           value={mode}
           onValueChange={(value) => setMode(value as 'light' | 'dark')}
           buttons={[
-            { value: 'light', label: 'Light', icon: 'white-balance-sunny' },
-            { value: 'dark', label: 'Dark', icon: 'moon-waning-crescent' },
+            { value: 'light', label: t('common:light'), icon: 'white-balance-sunny' },
+            { value: 'dark', label: t('common:dark'), icon: 'moon-waning-crescent' },
           ]}
         />
         <Divider style={styles.divider} />
-        <Text variant="titleMedium">Language</Text>
+        <Text variant="titleMedium">{t('common:language')}</Text>
         <SegmentedButtons
           value={language}
           onValueChange={(value) => setLanguage(value as 'en' | 'ur')}
@@ -126,17 +127,17 @@ export default function ProfileScreen() {
       </View>
 
       <View style={[styles.section, { backgroundColor: colors.surface, borderColor: colors.outline }]}>
-        <Text variant="titleLarge">Profile details</Text>
-        <TextInput mode="outlined" label="Email" value={user?.email ?? ''} disabled />
+        <Text variant="titleLarge">{t('profile.profileDetails')}</Text>
+        <TextInput mode="outlined" label={t('profile.email')} value={user?.email ?? ''} disabled />
         <TextInput
           mode="outlined"
-          label="Name"
+          label={t('profile.name')}
           value={profileForm.values.name}
           onChangeText={profileForm.handleChange('name')}
         />
         <TextInput
           mode="outlined"
-          label="Company"
+          label={t('profile.company')}
           value={profileForm.values.companyName}
           onChangeText={profileForm.handleChange('companyName')}
         />
@@ -145,24 +146,24 @@ export default function ProfileScreen() {
           onPress={() => profileForm.handleSubmit()}
           loading={profileForm.isSubmitting}
         >
-          Save profile
+          {t('profile.saveProfile')}
         </Button>
       </View>
 
       <View style={[styles.section, { backgroundColor: colors.surface, borderColor: colors.outline }]}>
-        <Text variant="titleLarge">Change password</Text>
+        <Text variant="titleLarge">{t('profile.sections.security')}</Text>
         <PasswordField
-          label="Current password"
+          label={t('profile.changePassword.currentPassword')}
           value={passwordForm.values.currentPassword}
           onChangeText={passwordForm.handleChange('currentPassword')}
         />
         <PasswordField
-          label="New password"
+          label={t('profile.changePassword.newPassword')}
           value={passwordForm.values.newPassword}
           onChangeText={passwordForm.handleChange('newPassword')}
         />
         <PasswordField
-          label="Confirm password"
+          label={t('profile.changePassword.confirmPassword')}
           value={passwordForm.values.confirmPassword}
           onChangeText={passwordForm.handleChange('confirmPassword')}
         />
@@ -171,7 +172,7 @@ export default function ProfileScreen() {
           onPress={() => passwordForm.handleSubmit()}
           loading={passwordForm.isSubmitting}
         >
-          Update password
+          {t('profile.changePassword.submit')}
         </Button>
       </View>
 

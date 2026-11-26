@@ -9,7 +9,10 @@
         "Users": "Users",
         "Settings": "Settings",
         "Dashboard": "Dashboard",
-        "More": "More"
+        "More": "More",
+        "Profile": "Profile",
+        "Language": "Language",
+        "Logout": "Logout"
     },
     "sidebarUserMenu": {
         "profile": "Profile",

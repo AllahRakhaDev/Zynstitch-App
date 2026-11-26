@@ -1,5 +1,6 @@
 {
   "title": "Measurements",
+  "singularTitle": "Measurement",
   "page": {
     "createTitle": "Create Measurement",
     "updateTitle": "Update Measurement"

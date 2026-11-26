@@ -7,10 +7,11 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { useTranslation } from 'react-i18next';
 
-import { BOTTOM_TABS, getMoreMenuSections } from '@/constants/menu';
+import { BOTTOM_TABS, getMenuItemLabelKey, getMoreMenuSections, type AppMenuActionItem } from '@/constants/menu';
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 import { useSession } from '@/providers/AuthProvider';
+import { useThemeMode } from '@/providers/ThemeProvider';
 import { ROLES } from '@/types/users.types';
 
 export const unstable_settings = {
@@ -18,13 +19,14 @@ export const unstable_settings = {
 };
 
 export default function AppTabsLayout() {
-  const { t } = useTranslation('sidebar');
+  const { t } = useTranslation(['sidebar', 'common']);
   const colors = useTheme();
   const insets = useSafeAreaInsets();
   const { width: screenWidth } = useWindowDimensions();
   const router = useRouter();
   const pathname = usePathname();
   const { user, signOut } = useSession();
+  const { language, setLanguage } = useThemeMode();
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerProgress] = useState(() => new Animated.Value(0));
   const drawerWidth = Math.min(screenWidth * 0.8, 320);
@@ -57,10 +59,10 @@ export default function AppTabsLayout() {
   });
 
   const confirmSignOut = () => {
-    Alert.alert('Sign out', 'Are you sure you want to sign out?', [
-      { text: 'Cancel', style: 'cancel' },
+    Alert.alert(t('common:signOut'), t('common:signOutConfirm'), [
+      { text: t('common:cancel'), style: 'cancel' },
       {
-        text: 'Sign out',
+        text: t('common:signOut'),
         style: 'destructive',
         onPress: () => {
           setDrawerVisible(false);
@@ -135,7 +137,7 @@ export default function AppTabsLayout() {
           >
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="Close navigation menu"
+              accessibilityLabel={t('common:closeNavigationMenu')}
               onPress={closeDrawer}
               style={styles.scrimPressable}
             />
@@ -165,12 +167,12 @@ export default function AppTabsLayout() {
                   Zynstitch
                 </Text>
                 <Text variant="bodySmall" style={{ color: colors.textSecondary }}>
-                  Workspace navigation
+                  {t('common:workspaceNavigation')}
                 </Text>
               </View>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel="Close menu"
+                accessibilityLabel={t('common:closeMenu')}
                 onPress={closeDrawer}
                 hitSlop={8}
                 style={styles.closeButton}
@@ -186,7 +188,7 @@ export default function AppTabsLayout() {
                 </Text>
               </View>
               <View style={styles.accountCopy}>
-                <Text variant="titleSmall">{user?.name ?? 'User'}</Text>
+                <Text variant="titleSmall">{user?.name ?? t('common:user')}</Text>
                 <Text variant="bodySmall" numberOfLines={1} style={{ color: colors.textSecondary }}>
                   {user?.email}
                 </Text>
@@ -197,13 +199,17 @@ export default function AppTabsLayout() {
               {moreSections.map((section) => (
                 <View key={section.title} style={styles.menuSection}>
                   <Text variant="labelLarge" style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-                    {section.title}
+                    {t(`common:${section.title}`, section.title)}
                   </Text>
                   <View style={[styles.menuCard, { borderColor: colors.outline }]}>
                     {section.items.map((item, index) => {
                       const active = 'href' in item && pathname === item.href;
                       const handlePress = () => {
                         if ('action' in item) {
+                          if ((item as AppMenuActionItem).action === 'toggleLanguage') {
+                            setLanguage(language === 'en' ? 'ur' : 'en');
+                            return;
+                          }
                           confirmSignOut();
                           return;
                         }
@@ -227,16 +233,16 @@ export default function AppTabsLayout() {
                             <MaterialCommunityIcons
                               name={item.icon}
                               size={22}
-                              color={active ? colors.primary : 'action' in item ? '#b3261e' : colors.text}
+                              color={active ? colors.primary : ('action' in item && (item as AppMenuActionItem).action !== 'toggleLanguage' ? '#b3261e' : colors.text)}
                             />
                             <Text
                               variant="titleSmall"
                               style={[
                                 styles.menuLabel,
-                                { color: active ? colors.primary : 'action' in item ? '#b3261e' : colors.text },
+                                { color: active ? colors.primary : ('action' in item && (item as AppMenuActionItem).action !== 'toggleLanguage' ? '#b3261e' : colors.text) },
                               ]}
                             >
-                              {item.label}
+                              {t(getMenuItemLabelKey(item.label))}
                             </Text>
                             {'action' in item ? null : (
                               <MaterialCommunityIcons name="chevron-right" size={20} color={colors.textSecondary} />

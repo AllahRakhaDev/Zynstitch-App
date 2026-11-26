@@ -1,6 +1,7 @@
 import { useTheme } from '@/hooks/use-theme';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { router, type Href } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet } from 'react-native';
 
 type Props = {
@@ -9,11 +10,12 @@ type Props = {
 
 export function BackArrowButton({ fallbackHref }: Props) {
   const colors = useTheme();
+  const { t } = useTranslation('common');
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel="Go back"
+      accessibilityLabel={t('goBack')}
       hitSlop={8}
       onPress={() => {
         if (router.canGoBack()) router.back();

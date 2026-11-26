@@ -1,4 +1,5 @@
 import { Stack } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { canAccessUsers } from '@/constants/menu';
 import { useTheme } from '@/hooks/use-theme';
@@ -10,6 +11,7 @@ export const unstable_settings = {
 };
 
 export default function AppLayout() {
+  const { t } = useTranslation('sidebar');
   const colors = useTheme();
   const { user } = useSession();
   const canManageUsers = canAccessUsers(user?.role ?? ROLES.ADMIN);
@@ -27,10 +29,10 @@ export default function AppLayout() {
     >
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="measurements" />
-      <Stack.Screen name="jobs" options={{ title: 'Jobs' }} />
-      <Stack.Screen name="profile" options={{ title: 'Profile' }} />
+      <Stack.Screen name="jobs" options={{ title: t('sidebar.Jobs') }} />
+      <Stack.Screen name="profile" options={{ title: t('sidebarUserMenu.profile') }} />
       <Stack.Protected guard={canManageUsers}>
-        <Stack.Screen name="users" options={{ title: 'Users' }} />
+        <Stack.Screen name="users" options={{ title: t('sidebar.Users') }} />
       </Stack.Protected>
     </Stack>
   );
