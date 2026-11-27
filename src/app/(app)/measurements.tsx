@@ -1,13 +1,38 @@
 import { deleteMeasurement, fetchAllCustomers, fetchAllMeasurements, saveMeasurement } from '@/api';
-import { CollectionTableScreen } from '@/components/shared/CollectionTableScreen';
+import { CollectionTableScreen, TableActionButton } from '@/components/shared/CollectionTableScreen';
+import { useExportJob } from '@/hooks/use-export-job';
 import type { ICustomer } from '@/types/customer.types';
 import type { IMeasurement } from '@/types/measurements.types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useSession } from '@/providers/AuthProvider';
+import { useSnackbar } from '@/providers/SnackbarProvider';
+import { downloadMeasurementPdf } from '@/utils/measurementPdf';
+
 export default function MeasurementsScreen() {
   const { t } = useTranslation('measurements');
+  const exportJob = useExportJob('measurements');
   const [customers, setCustomers] = useState<ICustomer[]>([]);
+  const [pdfBusyId, setPdfBusyId] = useState<string | null>(null);
+  const { user } = useSession();
+  const { showError } = useSnackbar();
+
+  const downloadPdf = async (row: Record<string, unknown>) => {
+    const id = String(row._id ?? '');
+    setPdfBusyId(id);
+    try {
+      await downloadMeasurementPdf(
+        row as unknown as IMeasurement,
+        user?.companyName || user?.name || '',
+        t('downloadPdf.action'),
+      );
+    } catch {
+      showError(t('downloadPdf.failed'));
+    } finally {
+      setPdfBusyId(null);
+    }
+  };
   const today = new Date().toISOString().slice(0, 10);
 
   useEffect(() => {
@@ -23,7 +48,7 @@ export default function MeasurementsScreen() {
     const response = await fetchAllMeasurements(0, 50, search ? { search } : undefined);
     return {
       success: response.success,
-      message: response.message,
+      message: t(response.message, { defaultValue: response.message }),
       items: response.data?.measurements ?? [],
       total: response.data?.total ?? 0,
     };
@@ -35,6 +60,16 @@ export default function MeasurementsScreen() {
       singularTitle={t('singularTitle')}
       entity="measurements"
       initialData={[]}
+      onExport={exportJob}
+      renderExtraActions={(row) => (
+        <TableActionButton
+          icon="file-pdf-box"
+          accessibilityLabel={t('downloadPdf.action')}
+          disabled={pdfBusyId === String(row._id ?? '')}
+          onPress={() => void downloadPdf(row)}
+        />
+      )}
+      canRefresh
       loadRows={loadMeasurements}
       saveRowRemote={async (values, existing) => {
         const measurement: IMeasurement = {
@@ -44,11 +79,11 @@ export default function MeasurementsScreen() {
           measurementName: String(values.measurementName ?? '').trim(),
         };
         const response = await saveMeasurement(measurement);
-        return { success: response.success, message: response.message, data: response.data };
+        return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
       }}
       deleteRowRemote={async (id) => {
         const response = await deleteMeasurement(id);
-        return { success: response.success, message: response.message, data: response.data };
+        return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
       }}
       fields={[
         { key: 'measurementName', label: t('form.measurementName'), type: 'text', required: true },

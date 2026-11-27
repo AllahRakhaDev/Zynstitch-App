@@ -47,21 +47,21 @@
     "no": "نہیں",
     "collarStylePlaceholder": "کالر کا انداز منتخب کریں",
     "fields": {
-      "kameezLength": "قمیض لمبائی (Kameez Length)",
-      "sleeveLength": "بازو (Sleeve)",
-      "shoulderWidth": "تیرا (Shoulder)",
-      "neck": "گلا (Neck)",
-      "chest": "چھاتی (Chest)",
-      "waist": "کمر (Waist)",
-      "bottomWidth": "گھیرا (Bottom Width)",
-      "shalwarLength": "شلوار (Shalwar)",
-      "bottomOpening": "پانچہ (Bottom Opening)",
-      "cuff": "کف (Cuff)",
-      "collarStyle": "کالر / بین (Collar / Ban)",
-      "hasChakPattiKaaj": "چاک پٹی کاج (Chak Patti Kaaj)",
-      "hasChestPocket": "چھاتی جیب (Chest Pocket)",
-      "hasSidePockets": "سائیڈ جیب (Side Pockets)",
-      "hasShalwarPocket": "شلوار جیب (Shalwar Pocket)"
+      "kameezLength": "قمیض لمبائی",
+      "sleeveLength": "بازو",
+      "shoulderWidth": "تیرا",
+      "neck": "گلا",
+      "chest": "چھاتی",
+      "waist": "کمر",
+      "bottomWidth": "گھیرا",
+      "shalwarLength": "شلوار",
+      "bottomOpening": "پانچہ",
+      "cuff": "کف",
+      "collarStyle": "کالر / بین",
+      "hasChakPattiKaaj": "چاک پٹی کاج",
+      "hasChestPocket": "چھاتی جیب",
+      "hasSidePockets": "سائیڈ جیب",
+      "hasShalwarPocket": "شلوار جیب"
     },
     "collarStyles": {
       "noCollar": "بغیر کالر",
@@ -112,6 +112,8 @@
     "somethingWentWrong": "کچھ غلط ہوگیا۔"
   },
   "downloadPdf": {
-    "generatedOn": "تخلیق کی تاریخ"
+    "generatedOn": "تخلیق کی تاریخ",
+    "action": "پی ڈی ایف ڈاؤن لوڈ کریں",
+    "failed": "پی ڈی ایف نہیں بن سکی۔"
   }
 }

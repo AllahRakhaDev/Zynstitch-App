@@ -10,7 +10,8 @@
     "status": "اسٹیٹس",
     "createdAt": "تخلیق کی تاریخ",
     "fileName": "فائل کا نام",
-    "actions": "عمل"
+    "actions": "عمل",
+    "error": "خرابی"
   },
   "filters": {
     "search": {
@@ -44,5 +45,10 @@
     "downloadNotAvailable": "ڈاؤن لوڈ دستیاب نہیں ہے",
     "downloadStarted": "ڈاؤن لوڈ شروع ہو گیا ہے",
     "downloadFail": "فائل ڈاؤن لوڈ کرنے میں ناکام"
+  },
+  "status": {
+    "PROCESSING": "جاری ہے",
+    "COMPLETED": "مکمل",
+    "FAILED": "ناکام"
   }
 }

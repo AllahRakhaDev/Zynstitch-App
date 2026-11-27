@@ -75,5 +75,6 @@
     "exportJobCreated": "Export job created successfully",
     "exportJobCreateFail": "Failed to create export job",
     "somethingWentWrong": "Something went wrong."
-  }
+  },
+  "singularTitle": "Customer"
 }

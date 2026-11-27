@@ -19,11 +19,11 @@ export default function ForgotPasswordScreen() {
     onSubmit: async (values, helpers) => {
       const response = await requestPasswordReset(values.email, i18n.language);
       if (!response.success) {
-        showError(response.message);
+        showError(t(response.message, { defaultValue: response.message }));
         helpers.setSubmitting(false);
         return;
       }
-      showSuccess(response.message);
+      showSuccess(t(response.message, { defaultValue: response.message }));
       helpers.resetForm();
       helpers.setSubmitting(false);
     },

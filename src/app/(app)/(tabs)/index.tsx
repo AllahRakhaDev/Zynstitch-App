@@ -3,7 +3,7 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import { ActivityIndicator, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { fetchAllCustomers, fetchAllMeasurements, fetchAllOrders } from '@/api';
@@ -98,8 +98,16 @@ export default function DashboardScreen() {
             <View style={[styles.summaryIcon, { backgroundColor: colors.backgroundSelected }]}>
               <MaterialCommunityIcons name={item.icon} size={24} color={colors.primary} />
             </View>
-            <Text variant="titleMedium" style={styles.summaryValue}>{item.value}</Text>
-            <Text variant="labelMedium" style={{ color: colors.textSecondary }}>{item.label}</Text>
+            <Text variant="titleMedium" style={styles.summaryValue} numberOfLines={1}>{item.value}</Text>
+            <Text
+              variant="labelSmall"
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.75}
+              style={[styles.summaryLabel, { color: colors.textSecondary }]}
+            >
+              {item.label}
+            </Text>
           </View>
         ))}
       </View>
@@ -117,7 +125,7 @@ export default function DashboardScreen() {
             ]}
           >
             <MaterialCommunityIcons name={action.icon} size={24} color={colors.primary} />
-            <Text variant="titleSmall" style={styles.actionTitle}>{action.label}</Text>
+            <Text variant="titleSmall" style={styles.actionTitle} numberOfLines={1}>{action.label}</Text>
             <Text variant="bodySmall" style={{ color: colors.textSecondary }}>{action.description}</Text>
           </Pressable>
         ))}
@@ -139,13 +147,13 @@ export default function DashboardScreen() {
             {index ? <View style={[styles.separator, { backgroundColor: colors.outline }]} /> : null}
             <View style={styles.orderRow}>
               <View style={{ flex: 1 }}>
-                <Text variant="titleSmall">{t('order')}: {order.orderNumber ?? t('order')}</Text>
-                <Text variant="bodySmall" style={{ color: colors.textSecondary }}>
+                <Text variant="titleSmall" numberOfLines={1}>{t('order')}: {order.orderNumber ?? t('order')}</Text>
+                <Text variant="bodySmall" numberOfLines={1} style={{ color: colors.textSecondary }}>
                   {order.customerName ?? order.customerId}
                 </Text>
               </View>
-              <Text variant="labelMedium" style={{ color: colors.primary }}>
-                {t('status') + ': ' + t('orders:status.' + order.status, order.status.replaceAll('_', ' '))}
+              <Text variant="labelMedium" numberOfLines={1} style={[styles.orderStatus, { color: colors.primary }]}>
+                {t('orders:status.' + order.status, String(order.status ?? '').replaceAll('_', ' '))}
               </Text>
             </View>
           </View>
@@ -172,8 +180,10 @@ const styles = StyleSheet.create({
   welcomeDescription: { color: 'rgba(255,255,255,0.88)', lineHeight: 22 },
   sectionHeading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   sectionTitle: { fontWeight: '700' },
-  summaryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },
-  summaryCard: { flexGrow: 1, flexBasis: '30%', minWidth: 96, padding: Spacing.three, borderRadius: 16, borderWidth: 1, gap: Spacing.one },
+  summaryGrid: { flexDirection: 'row', gap: Spacing.two },
+  summaryCard: { flexGrow: 1, flexBasis: 0, minWidth: 0, paddingVertical: Spacing.three, paddingHorizontal: 6, borderRadius: 16, borderWidth: 1, gap: Spacing.one },
+  summaryLabel: { letterSpacing: 0, fontSize: 11, lineHeight: 16 },
+  orderStatus: { flexShrink: 0, maxWidth: '45%' },
   summaryIcon: { width: 36, height: 36, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   summaryValue: { fontWeight: '700' },
   actionGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },

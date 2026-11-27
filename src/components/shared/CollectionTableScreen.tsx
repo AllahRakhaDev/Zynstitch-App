@@ -72,9 +72,26 @@ type Props = {
   loadRows?: (search: string) => Promise<RemoteListResult>;
   saveRowRemote?: (values: CollectionRow, existing: CollectionRow | null) => Promise<RemoteMutationResult>;
   deleteRowRemote?: (id: string) => Promise<RemoteMutationResult>;
+  /**
+   * Server-side export (creates an export job). When set, Export asks for an
+   * optional file name instead of sharing a CSV of the visible rows.
+   */
+  onExport?: (fileName?: string) => Promise<{ success: boolean; message: string }>;
+  /** Show a refresh button (only meaningful with `loadRows`). */
+  canRefresh?: boolean;
+  /** Extra buttons rendered next to Export / Add. */
+  headerActions?: React.ReactNode;
+  /** How many icons `renderExtraActions` can render per row (sizes the actions column). */
+  extraActionCount?: number;
 };
 
-const ACTIONS_WIDTH = 156;
+const ACTION_BUTTON_SIZE = 36;
+const ACTIONS_PADDING = Spacing.two * 2;
+
+/** Compact icon button for table rows; use it in `renderExtraActions` too. */
+export function TableActionButton(props: React.ComponentProps<typeof IconButton>) {
+  return <IconButton size={19} {...props} style={[styles.actionButton, props.style]} />;
+}
 const DEFAULT_COLUMN_WIDTH = 150;
 
 export function CollectionTableScreen({
@@ -94,8 +111,13 @@ export function CollectionTableScreen({
   loadRows,
   saveRowRemote,
   deleteRowRemote,
+  onExport,
+  canRefresh = false,
+  headerActions,
+  extraActionCount,
 }: Props) {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
+  const textDirection = i18n.dir(i18n.language) === 'rtl' ? 'rtl' : 'ltr';
   const colors = useTheme();
   const insets = useSafeAreaInsets();
   const { showSuccess, showError } = useSnackbar();
@@ -110,8 +132,18 @@ export function CollectionTableScreen({
   const [viewingRow, setViewingRow] = useState<CollectionRow | null>(null);
   const [formValues, setFormValues] = useState<Record<string, string | boolean>>({});
   const [saving, setSaving] = useState(false);
+  const [exportDialogVisible, setExportDialogVisible] = useState(false);
+  const [exportFileName, setExportFileName] = useState('');
+  const [exporting, setExporting] = useState(false);
 
-  const tableWidth = columns.reduce((total, column) => total + (column.width ?? DEFAULT_COLUMN_WIDTH), 0) + ACTIONS_WIDTH;
+  const actionCount =
+    (extraActionCount ?? (renderExtraActions ? 1 : 0)) +
+    Number(canView) +
+    Number(canEdit) +
+    Number(canDelete);
+  const actionsWidth = Math.max(actionCount * ACTION_BUTTON_SIZE + ACTIONS_PADDING, 96);
+  const tableWidth =
+    columns.reduce((total, column) => total + (column.width ?? DEFAULT_COLUMN_WIDTH), 0) + actionsWidth;
   const filteredRows = useMemo(() => {
     if (loadRows) return rows;
     const query = search.trim().toLowerCase();
@@ -263,7 +295,30 @@ export function CollectionTableScreen({
     ]);
   };
 
+  const confirmServerExport = async () => {
+    if (!onExport) return;
+    setExporting(true);
+    try {
+      const response = await onExport(exportFileName.trim() || undefined);
+      if (!response.success) {
+        showError(response.message || t('UnableToExport', { title }));
+        return;
+      }
+      showSuccess(response.message);
+      setExportDialogVisible(false);
+      setExportFileName('');
+    } catch {
+      showError(t('UnableToExport', { title }));
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const exportRows = async () => {
+    if (onExport) {
+      setExportDialogVisible(true);
+      return;
+    }
     try {
       const headers = columns.map((column) => column.label);
       const csvRows = filteredRows.map((row) =>
@@ -281,37 +336,49 @@ export function CollectionTableScreen({
   return (
     <View style={[styles.screen, { backgroundColor: colors.background, paddingTop: insets.top }]}>
       <View style={styles.pageHeader}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: Spacing.two }}>
+        <View style={styles.titleRow}>
           <BackArrowButton fallbackHref="/" />
           <View style={styles.titleCopy}>
-            <Text variant="headlineSmall" style={styles.title}>{title}</Text>
-            <Text variant="bodySmall" style={{ color: colors.textSecondary }}>
-              {filteredRows.length} {t('of')} {total} {t('records')}
+            <Text variant="headlineSmall" style={styles.title} numberOfLines={1}>{title}</Text>
+            <Text variant="bodySmall" style={{ color: colors.textSecondary, writingDirection: textDirection }} numberOfLines={1}>
+              {t('recordsCount', { shown: filteredRows.length, total })}
             </Text>
           </View>
         </View>
 
         <View style={[styles.headerActions, { marginBottom: Spacing.two }]}>
+          {canAdd ? (
+            <Button mode="contained" icon="plus" onPress={openCreate} compact style={styles.headerButton}>
+              {t('addEntity', { singularTitle })}
+            </Button>
+          ) : null}
           {canExport ? (
-            <Button mode="outlined" icon="download-outline" onPress={() => void exportRows()} compact> 
+            <Button mode="outlined" icon="download-outline" onPress={() => void exportRows()} compact style={styles.headerButton}>
               {t('Export')}
             </Button>
           ) : null}
-          {canAdd ? (
-            <Button mode="contained" icon="plus" onPress={openCreate} compact> 
-              {t('Add')} {singularTitle}
-            </Button>
+          {headerActions}
+          {canRefresh && loadRows ? (
+            <IconButton
+              mode="outlined"
+              icon="refresh"
+              size={20}
+              onPress={() => void refreshRows()}
+              disabled={loading}
+              accessibilityLabel={t('refresh')}
+              style={styles.refreshButton}
+            />
           ) : null}
         </View>
       </View>
 
       <Searchbar
-        placeholder={`${t('Search')} ${title.toLowerCase()}`}
+        placeholder={t('searchEntity', { title: title.toLowerCase() })}
         value={search}
         onChangeText={setSearch}
         style={[styles.search, { backgroundColor: colors.surface, borderColor: colors.outline }]}
       />
-      {loading ? <Text style={styles.loadState}>{t('Loading')} {title.toLowerCase()}…</Text> : null}
+      {loading ? <Text style={styles.loadState}>{t('loadingEntity', { title: title.toLowerCase() })}</Text> : null}
       {loadError ? <Text style={styles.loadError}>{loadError}</Text> : null}
 
       <ScrollView horizontal showsHorizontalScrollIndicator>
@@ -327,7 +394,7 @@ export function CollectionTableScreen({
                 {column.label}
               </Text>
             ))}
-            <Text variant="labelLarge" style={[styles.headerCell, { width: ACTIONS_WIDTH, color: colors.text }]}>
+            <Text variant="labelLarge" numberOfLines={1} style={[styles.headerCell, { width: actionsWidth, color: colors.text }]}>
               {t('Actions')}
             </Text>
           </View>
@@ -353,16 +420,16 @@ export function CollectionTableScreen({
                     </Text>
                   )
                 ))}
-                <View style={[styles.rowActions, { width: ACTIONS_WIDTH }]}>
+                <View style={[styles.rowActions, { width: actionsWidth }]}>
                   {renderExtraActions ? renderExtraActions(row) : null}
                   {canView ? (
-                    <IconButton icon="eye-outline" size={19} accessibilityLabel={t('viewEntity', { singularTitle })} onPress={() => setViewingRow(row)} />
+                    <TableActionButton icon="eye-outline" accessibilityLabel={t('viewEntity', { singularTitle })} onPress={() => setViewingRow(row)} />
                   ) : null}
                   {canEdit ? (
-                    <IconButton icon="pencil-outline" size={19} accessibilityLabel={t('editEntity', { singularTitle })} onPress={() => openEdit(row)} />
+                    <TableActionButton icon="pencil-outline" accessibilityLabel={t('editEntity', { singularTitle })} onPress={() => openEdit(row)} />
                   ) : null}
                   {canDelete ? (
-                    <IconButton icon="delete-outline" size={19} iconColor="#b3261e" accessibilityLabel={t('deleteConfirmTitle', { singularTitle })} onPress={() => removeRow(row)} />
+                    <TableActionButton icon="delete-outline" iconColor="#b3261e" accessibilityLabel={t('deleteConfirmTitle', { singularTitle })} onPress={() => removeRow(row)} />
                   ) : null}
                 </View>
               </View>
@@ -397,6 +464,27 @@ export function CollectionTableScreen({
           <Dialog.Actions>
             <Button onPress={closeForm} disabled={saving}>{t('cancel')}</Button>
             <Button mode="contained" onPress={saveRow} loading={saving}>{t('save')}</Button>
+          </Dialog.Actions>
+        </Dialog>
+
+        <Dialog visible={exportDialogVisible} onDismiss={() => !exporting && setExportDialogVisible(false)}>
+          <Dialog.Title>{t('exportDialog.title', { title })}</Dialog.Title>
+          <Dialog.Content style={styles.formFields}>
+            <Text variant="bodyMedium" style={{ writingDirection: textDirection }}>{t('exportDialog.message')}</Text>
+            <TextInput
+              mode="outlined"
+              label={t('exportDialog.fileName')}
+              value={exportFileName}
+              onChangeText={setExportFileName}
+              autoCapitalize="none"
+              right={<TextInput.Affix text=".xlsx" />}
+            />
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setExportDialogVisible(false)} disabled={exporting}>{t('cancel')}</Button>
+            <Button mode="contained" onPress={() => void confirmServerExport()} loading={exporting}>
+              {t('Export')}
+            </Button>
           </Dialog.Actions>
         </Dialog>
 
@@ -498,7 +586,7 @@ function displayValue(value: unknown, yesLabel = 'Yes', noLabel = 'No') {
 }
 
 function StatusBadge({ value }: { value: string }) {
-  const { t } = useTranslation(['orders', 'adminUsers', 'common']);
+  const { t } = useTranslation(['orders', 'adminUsers', 'jobs', 'common']);
   const normalized = value.toLowerCase();
   const palette = normalized === 'completed' || normalized === 'active'
     ? { background: '#e8f5e9', text: '#2e7d32' }
@@ -514,7 +602,9 @@ function StatusBadge({ value }: { value: string }) {
     <View style={[styles.statusBadge, { backgroundColor: palette.background }]}>
       <Text variant="labelSmall" style={{ color: palette.text, fontWeight: '700' }}>
         {t(`orders:status.${normalized}`, {
-          defaultValue: t(`adminUsers:status.${value}`, { defaultValue: value.replaceAll('_', ' ') }),
+          defaultValue: t(`adminUsers:status.${value}`, {
+            defaultValue: t(`jobs:status.${value.toUpperCase()}`, { defaultValue: value.replaceAll('_', ' ') }),
+          }),
         })}
       </Text>
     </View>
@@ -525,9 +615,12 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   pageHeader: { paddingHorizontal: Spacing.three, paddingTop: Spacing.two, paddingBottom: Spacing.one, gap: Spacing.two, flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center' },
   pageTitleGroup: { flexDirection: 'column', alignItems: 'flex-start', flex: 1, minWidth: 0, justifyContent: 'flex-start', width: '100%', gap: Spacing.two },
-  titleCopy: { gap: 2 },
+  titleRow: { flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch', marginBottom: Spacing.two },
+  titleCopy: { gap: 2, flex: 1, minWidth: 0 },
   title: { fontWeight: '700' },
-  headerActions: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },
+  headerActions: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', alignSelf: 'stretch', gap: Spacing.two },
+  headerButton: { maxWidth: '100%', flexShrink: 1 },
+  refreshButton: { margin: 0 },
   search: { marginHorizontal: Spacing.three, marginBottom: Spacing.three, borderWidth: StyleSheet.hairlineWidth },
   loadState: { paddingHorizontal: Spacing.three, paddingBottom: Spacing.two },
   loadError: { color: '#b3261e', paddingHorizontal: Spacing.three, paddingBottom: Spacing.two },
@@ -539,7 +632,8 @@ const styles = StyleSheet.create({
   cell: { paddingHorizontal: Spacing.two, paddingVertical: Spacing.two },
   statusCell: { alignItems: 'flex-start' },
   statusBadge: { borderRadius: 999, paddingHorizontal: Spacing.two, paddingVertical: Spacing.one },
-  rowActions: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
+  rowActions: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.two, overflow: 'hidden' },
+  actionButton: { margin: 0, width: ACTION_BUTTON_SIZE, height: ACTION_BUTTON_SIZE },
   emptyRow: { minHeight: 90, justifyContent: 'center', alignItems: 'center' },
   dialogScrollArea: { maxHeight: 520 },
   formFields: { gap: Spacing.three, paddingVertical: Spacing.two },

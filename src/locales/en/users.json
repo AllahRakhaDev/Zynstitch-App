@@ -1,127 +1,132 @@
 {
-    "login": {
-        "title": "Sign In",
-        "fields": {
-            "email": "Email Address",
-            "password": "Password"
-        },
-        "actions": {
-            "submit": "Login",
-            "showPassword": "Show password",
-            "hidePassword": "Hide password",
-            "forgotPassword": "Forgot Password"
-        },
-        "messages": {
-            "loginSuccess": "Login successful!",
-            "invalidCredentials": "Invalid email or password",
-            "accountBlocked": "Your account has been blocked. Please contact support.",
-            "unexpectedError": "Something went wrong. Please try again."
-        },
-        "errors": {
-            "invalidEmail": "Invalid email address",
-            "emailRequired": "Email is required",
-            "passwordMin": "Password must be at least 6 characters",
-            "passwordRequired": "Password is required"
-        }
+  "login": {
+    "title": "Sign In",
+    "fields": {
+      "email": "Email Address",
+      "password": "Password"
     },
-    "signup": {
-        "errors": {
-            "nameRequired": "Name is required",
-            "invalidEmail": "Invalid email address",
-            "emailRequired": "Email is required",
-            "passwordMin": "Password must be at least 6 characters",
-            "passwordRequired": "Password is required"
-        }
+    "actions": {
+      "submit": "Login",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "forgotPassword": "Forgot Password"
     },
-    "forgotPassword": {
-        "title": "Forgot Password",
-        "description": "Enter your email address and we will send you a link to reset your password.",
-        "fields": {
-            "email": "Email Address"
-        },
-        "actions": {
-            "submit": "Send Reset Link",
-            "backToLogin": "Back to Sign In"
-        },
-        "messages": {
-            "emailSent": "If an account exists for that email, a reset link has been sent.",
-            "tooManyRequests": "Too many reset requests. Please wait a while and try again.",
-            "unexpectedError": "Something went wrong. Please try again."
-        },
-        "errors": {
-            "invalidEmail": "Invalid email address",
-            "emailRequired": "Email is required"
-        }
+    "messages": {
+      "loginSuccess": "Login successful!",
+      "invalidCredentials": "Invalid email or password",
+      "accountBlocked": "Your account has been blocked. Please contact support.",
+      "unexpectedError": "Something went wrong. Please try again."
     },
-    "resetPassword": {
-        "title": "Reset Password",
-        "description": "Enter your new password below.",
-        "fields": {
-            "password": "New Password",
-            "confirmPassword": "Confirm Password"
-        },
-        "actions": {
-            "submit": "Reset Password",
-            "backToLogin": "Back to Sign In",
-            "requestNewLink": "Request a new reset link"
-        },
-        "messages": {
-            "success": "Your password has been reset. Please sign in with your new password.",
-            "invalidToken": "This reset link is invalid or has already been used.",
-            "expiredToken": "This reset link has expired. Please request a new one.",
-            "unexpectedError": "Something went wrong. Please try again."
-        },
-        "errors": {
-            "passwordMin": "Password must be at least 6 characters",
-            "passwordRequired": "Password is required",
-            "confirmPasswordRequired": "Please confirm your password",
-            "passwordMismatch": "Passwords must match"
-        }
-    },
-    "profile": {
-        "editProfile": "Edit Profile",
-        "sections": {
-            "personalInformation": "Personal Information",
-            "security": "Security"
-        },
-        "name": "Name",
-        "companyName": "Company Name",
-        "profilePhoto": "Profile Photo",
-        "saving": "Saving...",
-        "saveChanges": "Save Changes",
-        "saveProfile": "Save profile",
-        "profileDetails": "Profile details",
-        "email": "Email",
-        "company": "Company",
-        "cancel": "Cancel",
-        "updateSuccess": "Profile updated successfully!",
-        "updateError": "There was an issue updating the profile. Please try again.",
-        "otherUpdateError": "Something went wrong while updating the profile.",
-        "uploadFailed": "Profile photo upload failed.",
-        "imageUploadFailed": "Unable to upload profile photo. Please try again.",
-        "uploadTimeout": "Upload is taking too long. Please check your internet connection.",
-        "invalidImageType": "Only JPG, PNG, or WebP images are allowed.",
-        "imageTooLarge": "Image size must be less than 5 MB.",
-        "changePassword": {
-            "currentPassword": "Current Password",
-            "newPassword": "New Password",
-            "confirmPassword": "Confirm New Password",
-            "submit": "Update Password",
-            "updating": "Updating...",
-            "messages": {
-                "success": "Your password has been updated. Please sign in with your new password.",
-                "incorrectCurrentPassword": "Current password is incorrect.",
-                "unauthorized": "You must be signed in to change your password.",
-                "unexpectedError": "Something went wrong. Please try again."
-            },
-            "errors": {
-                "currentPasswordRequired": "Current password is required",
-                "newPasswordRequired": "New password is required",
-                "confirmPasswordRequired": "Please confirm your new password",
-                "passwordMin": "Password must be at least 6 characters",
-                "passwordMismatch": "Passwords must match",
-                "sameAsCurrent": "New password must be different from your current password"
-            }
-        }
+    "errors": {
+      "invalidEmail": "Invalid email address",
+      "emailRequired": "Email is required",
+      "passwordMin": "Password must be at least 6 characters",
+      "passwordRequired": "Password is required"
     }
+  },
+  "signup": {
+    "errors": {
+      "nameRequired": "Name is required",
+      "invalidEmail": "Invalid email address",
+      "emailRequired": "Email is required",
+      "passwordMin": "Password must be at least 6 characters",
+      "passwordRequired": "Password is required"
+    }
+  },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "description": "Enter your email address and we will send you a link to reset your password.",
+    "fields": {
+      "email": "Email Address"
+    },
+    "actions": {
+      "submit": "Send Reset Link",
+      "backToLogin": "Back to Sign In"
+    },
+    "messages": {
+      "emailSent": "If an account exists for that email, a reset link has been sent.",
+      "tooManyRequests": "Too many reset requests. Please wait a while and try again.",
+      "unexpectedError": "Something went wrong. Please try again."
+    },
+    "errors": {
+      "invalidEmail": "Invalid email address",
+      "emailRequired": "Email is required"
+    }
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Enter your new password below.",
+    "fields": {
+      "password": "New Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "actions": {
+      "submit": "Reset Password",
+      "backToLogin": "Back to Sign In",
+      "requestNewLink": "Request a new reset link"
+    },
+    "messages": {
+      "success": "Your password has been reset. Please sign in with your new password.",
+      "invalidToken": "This reset link is invalid or has already been used.",
+      "expiredToken": "This reset link has expired. Please request a new one.",
+      "unexpectedError": "Something went wrong. Please try again."
+    },
+    "errors": {
+      "passwordMin": "Password must be at least 6 characters",
+      "passwordRequired": "Password is required",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordMismatch": "Passwords must match"
+    }
+  },
+  "profile": {
+    "editProfile": "Edit Profile",
+    "sections": {
+      "personalInformation": "Personal Information",
+      "security": "Security"
+    },
+    "name": "Name",
+    "companyName": "Company Name",
+    "profilePhoto": "Profile Photo",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "saveProfile": "Save profile",
+    "profileDetails": "Profile details",
+    "email": "Email",
+    "company": "Company",
+    "cancel": "Cancel",
+    "updateSuccess": "Profile updated successfully!",
+    "updateError": "There was an issue updating the profile. Please try again.",
+    "otherUpdateError": "Something went wrong while updating the profile.",
+    "uploadFailed": "Profile photo upload failed.",
+    "imageUploadFailed": "Unable to upload profile photo. Please try again.",
+    "uploadTimeout": "Upload is taking too long. Please check your internet connection.",
+    "invalidImageType": "Only JPG, PNG, or WebP images are allowed.",
+    "imageTooLarge": "Image size must be less than 5 MB.",
+    "changePassword": {
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "submit": "Update Password",
+      "updating": "Updating...",
+      "messages": {
+        "success": "Your password has been updated. Please sign in with your new password.",
+        "incorrectCurrentPassword": "Current password is incorrect.",
+        "unauthorized": "You must be signed in to change your password.",
+        "unexpectedError": "Something went wrong. Please try again."
+      },
+      "errors": {
+        "currentPasswordRequired": "Current password is required",
+        "newPasswordRequired": "New password is required",
+        "confirmPasswordRequired": "Please confirm your new password",
+        "passwordMin": "Password must be at least 6 characters",
+        "passwordMismatch": "Passwords must match",
+        "sameAsCurrent": "New password must be different from your current password"
+      }
+    },
+    "changePhoto": "Change photo",
+    "removePhoto": "Remove photo",
+    "photoUploaded": "Profile photo updated",
+    "photoRemoved": "Profile photo removed",
+    "uploadNotConfigured": "Photo uploads are not configured on the server."
+  }
 }

@@ -37,7 +37,10 @@ export interface IUserProfile {
   name: string;
   email: string;
   companyName?: string;
+  /** Storage key of the profile photo. */
   profilePhoto?: string;
+  /** Short-lived signed URL for showing the photo. */
+  profilePhotoUrl?: string;
   role: UserRole;
 }
 

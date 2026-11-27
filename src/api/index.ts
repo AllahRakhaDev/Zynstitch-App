@@ -12,3 +12,4 @@ export * from '@/api/services/orders.service';
 export * from '@/api/services/jobs.service';
 export * from '@/api/services/user.service';
 export * from '@/api/services/support.service';
+export * from '@/api/services/profile-photo.service';

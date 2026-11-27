@@ -75,5 +75,6 @@
     "exportJobCreated": "برآمدی کام کامیابی سے تخلیق کیا گیا",
     "exportJobCreateFail": "برآمدی کام تخلیق کرنے میں ناکام",
     "somethingWentWrong": "کچھ غلط ہوگیا۔"
-  }
+  },
+  "singularTitle": "گاہک"
 }

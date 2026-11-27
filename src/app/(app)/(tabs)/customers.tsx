@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { deleteCustomer, fetchAllCustomers, saveCustomer } from '@/api';
-import { CollectionTableScreen } from '@/components/shared/CollectionTableScreen';
+import { CollectionTableScreen, TableActionButton } from '@/components/shared/CollectionTableScreen';
+import { useExportJob } from '@/hooks/use-export-job';
 import type { ICustomer } from '@/types/customer.types';
-import { IconButton } from 'react-native-paper';
 import { Linking } from 'react-native';
 import { getWhatsAppUrl } from '@/utils/whatsapp';
 
@@ -19,11 +19,12 @@ const formatPhoneNumber = (phone: string): { formatted: string; isValid: boolean
 
 export default function CustomersScreen() {
   const { t } = useTranslation('customers');
+  const exportJob = useExportJob('customers');
   const loadCustomers = async (search: string) => {
     const response = await fetchAllCustomers(0, 50, search ? { search } : undefined);
     return {
       success: response.success,
-      message: response.message,
+      message: t(response.message, { defaultValue: response.message }),
       items: response.data?.customers ?? [],
       total: response.data?.total ?? 0,
     };
@@ -32,9 +33,11 @@ export default function CustomersScreen() {
   return (
     <CollectionTableScreen
       title={t('title')}
-      singularTitle={t('modal.createTitle')}
+      singularTitle={t('singularTitle')}
       entity="customers"
       initialData={[]}
+      onExport={exportJob}
+      canRefresh
       loadRows={loadCustomers}
       renderExtraActions={(row) => {
         const phone = String(row.phone ?? '');
@@ -42,9 +45,8 @@ export default function CustomersScreen() {
         const url = getWhatsAppUrl(phone, name);
         if (!url) return null;
         return (
-          <IconButton
+          <TableActionButton
             icon="whatsapp"
-            size={19}
             iconColor="#25D366"
             onPress={(e: any) => {
               e.stopPropagation();
@@ -71,11 +73,11 @@ export default function CustomersScreen() {
           address: String(values.address ?? '').trim(),
         };
         const response = await saveCustomer(customer);
-        return { success: response.success, message: response.message, data: response.data };
+        return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
       }}
       deleteRowRemote={async (id) => {
         const response = await deleteCustomer(id);
-        return { success: response.success, message: response.message, data: response.data };
+        return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
       }}
       fields={[
         { key: 'name', label: t('modal.fields.name'), type: 'text', required: true },

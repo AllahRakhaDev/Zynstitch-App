@@ -112,6 +112,8 @@
     "somethingWentWrong": "Something went wrong."
   },
   "downloadPdf": {
-    "generatedOn": "Generated On"
+    "generatedOn": "Generated On",
+    "action": "Download PDF",
+    "failed": "Could not create the PDF."
   }
 }
