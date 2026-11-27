@@ -1,127 +1,132 @@
 {
-    "login": {
-        "title": "لاگ ان کریں",
-        "fields": {
-            "email": "ای میل",
-            "password": "پاس ورڈ"
-        },
-        "actions": {
-            "submit": "لاگ ان",
-            "showPassword": "پاس ورڈ دکھائیں",
-            "hidePassword": "پاس ورڈ چھپائیں",
-            "forgotPassword": "پاس ورڈ بھول گئے"
-        },
-        "messages": {
-            "loginSuccess": "کامیابی سے لاگ ان ہو گیا۔",
-            "invalidCredentials": "ای میل یا پاس ورڈ درست نہیں۔",
-            "accountBlocked": "آپ کا اکاؤنٹ مسدود ہے۔ براہ کرم سپورٹ سے رابطہ کریں۔",
-            "unexpectedError": "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔"
-        },
-        "errors": {
-            "invalidEmail": "درست ای میل درج کریں۔",
-            "emailRequired": "ای میل درج کرنا ضروری ہے۔",
-            "passwordMin": "پاس ورڈ کم از کم 6 حروف پر مشتمل ہونا چاہیے۔",
-            "passwordRequired": "پاس ورڈ درج کرنا ضروری ہے۔"
-        }
+  "login": {
+    "title": "لاگ ان کریں",
+    "fields": {
+      "email": "ای میل",
+      "password": "پاس ورڈ"
     },
-    "signup": {
-        "errors": {
-            "nameRequired": "نام درج کرنا ضروری ہے۔",
-            "invalidEmail": "درست ای میل درج کریں۔",
-            "emailRequired": "ای میل درج کرنا ضروری ہے۔",
-            "passwordMin": "پاس ورڈ کم از کم 6 حروف پر مشتمل ہونا چاہیے۔",
-            "passwordRequired": "پاس ورڈ درج کرنا ضروری ہے۔"
-        }
+    "actions": {
+      "submit": "لاگ ان",
+      "showPassword": "پاس ورڈ دکھائیں",
+      "hidePassword": "پاس ورڈ چھپائیں",
+      "forgotPassword": "پاس ورڈ بھول گئے"
     },
-    "forgotPassword": {
-        "title": "پاس ورڈ بھول گئے",
-        "description": "اپنا ای میل ایڈریس درج کریں، ہم آپ کو پاس ورڈ ری سیٹ کرنے کا لنک بھیجیں گے۔",
-        "fields": {
-            "email": "ای میل ایڈریس"
-        },
-        "actions": {
-            "submit": "ری سیٹ لنک بھیجیں",
-            "backToLogin": "سائن اِن پر واپس جائیں"
-        },
-        "messages": {
-            "emailSent": "اگر اس ای میل کے لیے اکاؤنٹ موجود ہے تو ری سیٹ لنک بھیج دیا گیا ہے۔",
-            "tooManyRequests": "ری سیٹ کی بہت زیادہ درخواستیں۔ براہ کرم کچھ دیر انتظار کر کے دوبارہ کوشش کریں۔",
-            "unexpectedError": "کچھ غلط ہو گیا ہے، دوبارہ کوشش کریں۔"
-        },
-        "errors": {
-            "invalidEmail": "غلط ای میل ایڈریس",
-            "emailRequired": "ای میل درکار ہے"
-        }
+    "messages": {
+      "loginSuccess": "کامیابی سے لاگ ان ہو گیا۔",
+      "invalidCredentials": "ای میل یا پاس ورڈ درست نہیں۔",
+      "accountBlocked": "آپ کا اکاؤنٹ مسدود ہے۔ براہ کرم سپورٹ سے رابطہ کریں۔",
+      "unexpectedError": "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔"
     },
-    "resetPassword": {
-        "title": "پاس ورڈ ری سیٹ کریں",
-        "description": "نیچے اپنا نیا پاس ورڈ درج کریں۔",
-        "fields": {
-            "password": "نیا پاس ورڈ",
-            "confirmPassword": "پاس ورڈ کی تصدیق"
-        },
-        "actions": {
-            "submit": "پاس ورڈ ری سیٹ کریں",
-            "backToLogin": "سائن اِن پر واپس جائیں",
-            "requestNewLink": "نیا ری سیٹ لنک طلب کریں"
-        },
-        "messages": {
-            "success": "آپ کا پاس ورڈ ری سیٹ ہو گیا ہے۔ براہ کرم نئے پاس ورڈ سے سائن اِن کریں۔",
-            "invalidToken": "یہ ری سیٹ لنک غلط ہے یا پہلے ہی استعمال ہو چکا ہے۔",
-            "expiredToken": "یہ ری سیٹ لنک ختم ہو چکا ہے۔ براہ کرم نیا لنک طلب کریں۔",
-            "unexpectedError": "کچھ غلط ہو گیا ہے، دوبارہ کوشش کریں۔"
-        },
-        "errors": {
-            "passwordMin": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے",
-            "passwordRequired": "پاس ورڈ درکار ہے",
-            "confirmPasswordRequired": "براہ کرم پاس ورڈ کی تصدیق کریں",
-            "passwordMismatch": "پاس ورڈ ایک جیسے ہونے چاہئیں"
-        }
-    },
-    "profile": {
-        "editProfile": "پروفائل میں ترمیم کریں",
-        "sections": {
-            "personalInformation": "ذاتی معلومات",
-            "security": "سیکیورٹی"
-        },
-        "name": "نام",
-        "companyName": "کمپنی کا نام",
-        "profilePhoto": "پروفائل تصویر",
-        "saving": "محفوظ کیا جا رہا ہے...",
-        "saveChanges": "تبدیلیاں محفوظ کریں",
-        "saveProfile": "پروفائل محفوظ کریں",
-        "profileDetails": "پروفائل تفصیلات",
-        "email": "ای میل",
-        "company": "کمپنی",
-        "cancel": "منسوخ کریں",
-        "updateSuccess": "پروفائل کامیابی سے اپڈیٹ ہو گئی!",
-        "updateError": "پروفائل اپڈیٹ کرنے میں مسئلہ پیش آیا۔ دوبارہ کوشش کریں۔",
-        "otherUpdateError": "پروفائل اپڈیٹ کرتے وقت کچھ غلط ہو گیا",
-        "uploadFailed": "پروفائل تصویر اپلوڈ نہیں ہو سکی۔",
-        "imageUploadFailed": "پروفائل تصویر اپلوڈ کرنے میں ناکامی۔ دوبارہ کوشش کریں۔",
-        "uploadTimeout": "اپلوڈ میں زیادہ وقت لگ رہا ہے۔ انٹرنیٹ کنکشن چیک کریں۔",
-        "invalidImageType": "صرف JPG، PNG یا WebP تصاویر کی اجازت ہے۔",
-        "imageTooLarge": "تصویر کا سائز 5 ایم بی سے کم ہونا چاہیے۔",
-        "changePassword": {
-            "currentPassword": "موجودہ پاس ورڈ",
-            "newPassword": "نیا پاس ورڈ",
-            "confirmPassword": "نئے پاس ورڈ کی تصدیق",
-            "submit": "پاس ورڈ اپڈیٹ کریں",
-            "updating": "اپڈیٹ ہو رہا ہے...",
-            "messages": {
-                "success": "آپ کا پاس ورڈ اپڈیٹ ہو گیا ہے۔ براہ کرم نئے پاس ورڈ سے سائن اِن کریں۔",
-                "incorrectCurrentPassword": "موجودہ پاس ورڈ غلط ہے۔",
-                "unauthorized": "پاس ورڈ تبدیل کرنے کے لیے سائن اِن ہونا ضروری ہے۔",
-                "unexpectedError": "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔"
-            },
-            "errors": {
-                "currentPasswordRequired": "موجودہ پاس ورڈ درج کرنا ضروری ہے",
-                "newPasswordRequired": "نیا پاس ورڈ درج کرنا ضروری ہے",
-                "confirmPasswordRequired": "براہ کرم نئے پاس ورڈ کی تصدیق کریں",
-                "passwordMin": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے",
-                "passwordMismatch": "پاس ورڈ ایک جیسے ہونے چاہئیں",
-                "sameAsCurrent": "نیا پاس ورڈ موجودہ پاس ورڈ سے مختلف ہونا چاہیے"
-            }
-        }
+    "errors": {
+      "invalidEmail": "درست ای میل درج کریں۔",
+      "emailRequired": "ای میل درج کرنا ضروری ہے۔",
+      "passwordMin": "پاس ورڈ کم از کم 6 حروف پر مشتمل ہونا چاہیے۔",
+      "passwordRequired": "پاس ورڈ درج کرنا ضروری ہے۔"
     }
+  },
+  "signup": {
+    "errors": {
+      "nameRequired": "نام درج کرنا ضروری ہے۔",
+      "invalidEmail": "درست ای میل درج کریں۔",
+      "emailRequired": "ای میل درج کرنا ضروری ہے۔",
+      "passwordMin": "پاس ورڈ کم از کم 6 حروف پر مشتمل ہونا چاہیے۔",
+      "passwordRequired": "پاس ورڈ درج کرنا ضروری ہے۔"
+    }
+  },
+  "forgotPassword": {
+    "title": "پاس ورڈ بھول گئے",
+    "description": "اپنا ای میل ایڈریس درج کریں، ہم آپ کو پاس ورڈ ری سیٹ کرنے کا لنک بھیجیں گے۔",
+    "fields": {
+      "email": "ای میل ایڈریس"
+    },
+    "actions": {
+      "submit": "ری سیٹ لنک بھیجیں",
+      "backToLogin": "سائن اِن پر واپس جائیں"
+    },
+    "messages": {
+      "emailSent": "اگر اس ای میل کے لیے اکاؤنٹ موجود ہے تو ری سیٹ لنک بھیج دیا گیا ہے۔",
+      "tooManyRequests": "ری سیٹ کی بہت زیادہ درخواستیں۔ براہ کرم کچھ دیر انتظار کر کے دوبارہ کوشش کریں۔",
+      "unexpectedError": "کچھ غلط ہو گیا ہے، دوبارہ کوشش کریں۔"
+    },
+    "errors": {
+      "invalidEmail": "غلط ای میل ایڈریس",
+      "emailRequired": "ای میل درکار ہے"
+    }
+  },
+  "resetPassword": {
+    "title": "پاس ورڈ ری سیٹ کریں",
+    "description": "نیچے اپنا نیا پاس ورڈ درج کریں۔",
+    "fields": {
+      "password": "نیا پاس ورڈ",
+      "confirmPassword": "پاس ورڈ کی تصدیق"
+    },
+    "actions": {
+      "submit": "پاس ورڈ ری سیٹ کریں",
+      "backToLogin": "سائن اِن پر واپس جائیں",
+      "requestNewLink": "نیا ری سیٹ لنک طلب کریں"
+    },
+    "messages": {
+      "success": "آپ کا پاس ورڈ ری سیٹ ہو گیا ہے۔ براہ کرم نئے پاس ورڈ سے سائن اِن کریں۔",
+      "invalidToken": "یہ ری سیٹ لنک غلط ہے یا پہلے ہی استعمال ہو چکا ہے۔",
+      "expiredToken": "یہ ری سیٹ لنک ختم ہو چکا ہے۔ براہ کرم نیا لنک طلب کریں۔",
+      "unexpectedError": "کچھ غلط ہو گیا ہے، دوبارہ کوشش کریں۔"
+    },
+    "errors": {
+      "passwordMin": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے",
+      "passwordRequired": "پاس ورڈ درکار ہے",
+      "confirmPasswordRequired": "براہ کرم پاس ورڈ کی تصدیق کریں",
+      "passwordMismatch": "پاس ورڈ ایک جیسے ہونے چاہئیں"
+    }
+  },
+  "profile": {
+    "editProfile": "پروفائل میں ترمیم کریں",
+    "sections": {
+      "personalInformation": "ذاتی معلومات",
+      "security": "سیکیورٹی"
+    },
+    "name": "نام",
+    "companyName": "کمپنی کا نام",
+    "profilePhoto": "پروفائل تصویر",
+    "saving": "محفوظ کیا جا رہا ہے...",
+    "saveChanges": "تبدیلیاں محفوظ کریں",
+    "saveProfile": "پروفائل محفوظ کریں",
+    "profileDetails": "پروفائل تفصیلات",
+    "email": "ای میل",
+    "company": "کمپنی",
+    "cancel": "منسوخ کریں",
+    "updateSuccess": "پروفائل کامیابی سے اپڈیٹ ہو گئی!",
+    "updateError": "پروفائل اپڈیٹ کرنے میں مسئلہ پیش آیا۔ دوبارہ کوشش کریں۔",
+    "otherUpdateError": "پروفائل اپڈیٹ کرتے وقت کچھ غلط ہو گیا",
+    "uploadFailed": "پروفائل تصویر اپلوڈ نہیں ہو سکی۔",
+    "imageUploadFailed": "پروفائل تصویر اپلوڈ کرنے میں ناکامی۔ دوبارہ کوشش کریں۔",
+    "uploadTimeout": "اپلوڈ میں زیادہ وقت لگ رہا ہے۔ انٹرنیٹ کنکشن چیک کریں۔",
+    "invalidImageType": "صرف JPG، PNG یا WebP تصاویر کی اجازت ہے۔",
+    "imageTooLarge": "تصویر کا سائز 5 ایم بی سے کم ہونا چاہیے۔",
+    "changePassword": {
+      "currentPassword": "موجودہ پاس ورڈ",
+      "newPassword": "نیا پاس ورڈ",
+      "confirmPassword": "نئے پاس ورڈ کی تصدیق",
+      "submit": "پاس ورڈ اپڈیٹ کریں",
+      "updating": "اپڈیٹ ہو رہا ہے...",
+      "messages": {
+        "success": "آپ کا پاس ورڈ اپڈیٹ ہو گیا ہے۔ براہ کرم نئے پاس ورڈ سے سائن اِن کریں۔",
+        "incorrectCurrentPassword": "موجودہ پاس ورڈ غلط ہے۔",
+        "unauthorized": "پاس ورڈ تبدیل کرنے کے لیے سائن اِن ہونا ضروری ہے۔",
+        "unexpectedError": "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔"
+      },
+      "errors": {
+        "currentPasswordRequired": "موجودہ پاس ورڈ درج کرنا ضروری ہے",
+        "newPasswordRequired": "نیا پاس ورڈ درج کرنا ضروری ہے",
+        "confirmPasswordRequired": "براہ کرم نئے پاس ورڈ کی تصدیق کریں",
+        "passwordMin": "پاس ورڈ کم از کم 6 حروف کا ہونا چاہیے",
+        "passwordMismatch": "پاس ورڈ ایک جیسے ہونے چاہئیں",
+        "sameAsCurrent": "نیا پاس ورڈ موجودہ پاس ورڈ سے مختلف ہونا چاہیے"
+      }
+    },
+    "changePhoto": "تصویر تبدیل کریں",
+    "removePhoto": "تصویر ہٹائیں",
+    "photoUploaded": "پروفائل تصویر اپ ڈیٹ ہو گئی",
+    "photoRemoved": "پروفائل تصویر ہٹا دی گئی",
+    "uploadNotConfigured": "سرور پر تصویر اپ لوڈ کی سہولت ترتیب نہیں دی گئی۔"
+  }
 }

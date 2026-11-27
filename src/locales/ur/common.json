@@ -79,5 +79,14 @@
   "unableToLoad": "{{title}} لوڈ نہیں ہو سکا۔",
   "viewEntity": "{{singularTitle}} دیکھیں",
   "edit": "ترمیم",
-  "view": "دیکھیں"
+  "view": "دیکھیں",
+  "exportDialog": {
+    "title": "{{title}} برآمد کریں",
+    "message": "ایک ایکسپورٹ جاب بنائی جائے گی۔ مکمل ہونے پر جابز سے ایکسل فائل ڈاؤن لوڈ کریں۔",
+    "fileName": "فائل کا نام (اختیاری)",
+    "created": "ایکسپورٹ جاب بن گئی۔ فائل کے لیے جابز دیکھیں۔"
+  },
+  "recordsCount": "{{total}} میں سے {{shown}} ریکارڈز",
+  "searchEntity": "{{title}} تلاش کریں",
+  "loadingEntity": "{{title}} لوڈ ہو رہے ہیں…"
 }

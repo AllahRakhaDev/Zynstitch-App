@@ -110,5 +110,6 @@
     "exportJobCreated": "برآمدی کام کامیابی سے بنایا گیا",
     "exportJobCreateFail": "برآمدی کام بنانے میں ناکامی",
     "somethingWentWrong": "کچھ غلط ہوگیا۔"
-  }
+  },
+  "singularTitle": "آرڈر"
 }

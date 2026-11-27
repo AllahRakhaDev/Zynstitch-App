@@ -10,7 +10,8 @@
     "status": "Status",
     "createdAt": "Created At",
     "fileName": "File name",
-    "actions": "Actions"
+    "actions": "Actions",
+    "error": "Error"
   },
   "filters": {
     "search": {
@@ -44,5 +45,10 @@
     "downloadNotAvailable": "Download not available",
     "downloadStarted": "Download started successfully",
     "downloadFail": "Failed to download file"
+  },
+  "status": {
+    "PROCESSING": "Processing",
+    "COMPLETED": "Completed",
+    "FAILED": "Failed"
   }
 }

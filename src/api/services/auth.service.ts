@@ -1,8 +1,5 @@
 import { apiClient, getErrorMessage } from '@/api/client';
 import { endpoints } from '@/api/endpoints';
-import { mockDelay } from '@/api/mock/delay';
-import { MOCK_PASSWORD, mockProfile } from '@/api/mock/data';
-import { env } from '@/config/env';
 import type { ServiceResponse } from '@/types/serviceResponse.types';
 import type { IUserProfile, LoginFormValues, LoginResponseData } from '@/types/users.types';
 
@@ -54,14 +51,6 @@ export async function requestPasswordReset(
   email: string,
   lang = 'en',
 ): Promise<ServiceResponse<null>> {
-  if (env.useMockApi) {
-    await mockDelay();
-    return {
-      success: true,
-      message: 'forgotPassword.messages.emailSent',
-      data: null,
-    };
-  }
 
   try {
     const { data } = await apiClient.post<ServiceResponse<null>>(
@@ -82,21 +71,6 @@ export async function resetPassword(
   token: string,
   newPassword: string,
 ): Promise<ServiceResponse<null>> {
-  if (env.useMockApi) {
-    await mockDelay();
-    if (!token?.trim()) {
-      return {
-        success: false,
-        message: 'resetPassword.messages.invalidToken',
-        data: null,
-      };
-    }
-    return {
-      success: true,
-      message: 'resetPassword.messages.success',
-      data: null,
-    };
-  }
 
   try {
     const { data } = await apiClient.post<ServiceResponse<null>>(
@@ -117,21 +91,6 @@ export async function changePassword(
   currentPassword: string,
   newPassword: string,
 ): Promise<ServiceResponse<null>> {
-  if (env.useMockApi) {
-    await mockDelay();
-    if (currentPassword !== MOCK_PASSWORD) {
-      return {
-        success: false,
-        message: 'profile.changePassword.messages.incorrectCurrentPassword',
-        data: null,
-      };
-    }
-    return {
-      success: true,
-      message: 'profile.changePassword.messages.success',
-      data: null,
-    };
-  }
 
   try {
     const { data } = await apiClient.post<ServiceResponse<null>>(

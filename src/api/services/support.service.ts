@@ -1,7 +1,5 @@
 import { apiClient, getErrorMessage } from '@/api/client';
 import { endpoints } from '@/api/endpoints';
-import { mockDelay } from '@/api/mock/delay';
-import { env } from '@/config/env';
 import type { ServiceResponse } from '@/types/serviceResponse.types';
 
 export interface SupportEmailPayload {
@@ -13,14 +11,6 @@ export interface SupportEmailPayload {
 export async function sendSupportEmail(
   payload: SupportEmailPayload,
 ): Promise<ServiceResponse<null>> {
-  if (env.useMockApi) {
-    await mockDelay();
-    return {
-      success: true,
-      message: 'Support request submitted successfully.',
-      data: null,
-    };
-  }
 
   try {
     const { data } = await apiClient.post<ServiceResponse<null>>(

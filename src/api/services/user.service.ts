@@ -1,8 +1,5 @@
 import { apiClient, getErrorMessage } from '@/api/client';
 import { endpoints } from '@/api/endpoints';
-import { mockProfile, mockUsers } from '@/api/mock/data';
-import { mockDelay } from '@/api/mock/delay';
-import { env } from '@/config/env';
 import type { ServiceResponse } from '@/types/serviceResponse.types';
 import type {
   IUser,
@@ -17,27 +14,6 @@ export async function fetchAllAdminUsers(
   limit = 20,
   filters?: Record<string, string>,
 ): Promise<UserResponse<{ users: IUser[]; total: number }>> {
-  if (env.useMockApi) {
-    await mockDelay();
-    const search = filters?.search?.toLowerCase().trim();
-    let users = [...mockUsers];
-    if (search) {
-      users = users.filter(
-        (u) =>
-          u.name.toLowerCase().includes(search) ||
-          u.email.toLowerCase().includes(search) ||
-          u.companyName?.toLowerCase().includes(search),
-      );
-    }
-    const total = users.length;
-    const sliced = limit > 0 ? users.slice(page * limit, page * limit + limit) : users;
-    return {
-      success: true,
-      data: { users: sliced, total },
-      message: 'serviceMessages.fetchSuccess',
-    };
-  }
-
   try {
     const { data } = await apiClient.get<UserResponse<{ users: IUser[]; total: number }>>(
       endpoints.users.list,
@@ -53,49 +29,10 @@ export async function fetchAllAdminUsers(
   }
 }
 
+/** Creates a user, or updates one when `_id` is set (blank password keeps the current one). */
 export async function saveAdminUser(
-  user: IUserFormValues & { _id?: string },
+  user: Partial<IUserFormValues> & Pick<IUserFormValues, 'name' | 'email' | 'role' | 'status'> & { _id?: string },
 ): Promise<UserResponse<IUser>> {
-  if (env.useMockApi) {
-    await mockDelay();
-    const now = new Date().toISOString();
-    if (user._id) {
-      const index = mockUsers.findIndex((u) => u._id === user._id);
-      if (index >= 0) {
-        mockUsers[index] = {
-          ...mockUsers[index],
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          status: user.status,
-          companyName: user.companyName,
-          updatedAt: now,
-        };
-        return {
-          success: true,
-          data: mockUsers[index],
-          message: 'serviceMessages.updateSuccess',
-        };
-      }
-    }
-    const created: IUser = {
-      _id: `user-${Date.now()}`,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-      companyName: user.companyName,
-      createdAt: now,
-      updatedAt: now,
-    };
-    mockUsers.unshift(created);
-    return {
-      success: true,
-      data: created,
-      message: 'serviceMessages.createSuccess',
-    };
-  }
-
   try {
     const { data } = await apiClient.post<UserResponse<IUser>>(endpoints.users.list, user);
     return data;
@@ -109,13 +46,6 @@ export async function saveAdminUser(
 }
 
 export async function deleteAdminUser(id: string): Promise<UserResponse<null>> {
-  if (env.useMockApi) {
-    await mockDelay();
-    const index = mockUsers.findIndex((u) => u._id === id);
-    if (index >= 0) mockUsers.splice(index, 1);
-    return { success: true, data: null, message: 'serviceMessages.deleteSuccess' };
-  }
-
   try {
     const { data } = await apiClient.delete<UserResponse<null>>(endpoints.users.detail(id));
     return data;
@@ -128,32 +58,15 @@ export async function deleteAdminUser(id: string): Promise<UserResponse<null>> {
   }
 }
 
+/** Updates the signed-in user's own profile; `_userId` is kept for call-site compatibility. */
 export async function updateUserProfile(
-  userId: string,
+  _userId: string,
   payload: UpdateProfilePayload,
 ): Promise<ServiceResponse<IUserProfile>> {
-  if (env.useMockApi) {
-    await mockDelay();
-    Object.assign(mockProfile, payload);
-    const index = mockUsers.findIndex((u) => u._id === userId);
-    if (index >= 0) {
-      mockUsers[index] = {
-        ...mockUsers[index],
-        ...payload,
-        updatedAt: new Date().toISOString(),
-      };
-    }
-    return {
-      success: true,
-      message: 'profile.updateSuccess',
-      data: { ...mockProfile },
-    };
-  }
-
   try {
     const { data } = await apiClient.put<ServiceResponse<IUserProfile>>(
       endpoints.users.profile,
-      { userId, ...payload },
+      payload,
     );
     return data;
   } catch (error) {

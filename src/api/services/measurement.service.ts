@@ -1,6 +1,5 @@
 import { apiClient, getErrorMessage } from '@/api/client';
 import { endpoints } from '@/api/endpoints';
-import { env } from '@/config/env';
 import type { IMeasurement, MeasurementResponse } from '@/types/measurements.types';
 
 export async function fetchAllMeasurements(

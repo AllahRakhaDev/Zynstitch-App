@@ -79,5 +79,14 @@
   "unableToLoad": "Unable to load {{title}}.",
   "viewEntity": "View {{singularTitle}}",
   "edit": "Edit",
-  "view": "View"
+  "view": "View",
+  "exportDialog": {
+    "title": "Export {{title}}",
+    "message": "An export job will be created. Track it and download the Excel file from Jobs once it completes.",
+    "fileName": "File name (optional)",
+    "created": "Export job created. Check Jobs for the file."
+  },
+  "recordsCount": "{{shown}} of {{total}} records",
+  "searchEntity": "Search {{title}}",
+  "loadingEntity": "Loading {{title}}…"
 }

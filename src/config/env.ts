@@ -47,9 +47,4 @@ function resolveApiUrl(url: string): string {
 
 export const env = {
   apiUrl: resolveApiUrl(configuredApiUrl),
-  /**
-   * Mock data for modules the Nest API does not implement yet.
-   * Auth and customers always talk to EXPO_PUBLIC_API_URL.
-   */
-  useMockApi: (process.env.EXPO_PUBLIC_USE_MOCK_API ?? 'true') === 'true',
 } as const;

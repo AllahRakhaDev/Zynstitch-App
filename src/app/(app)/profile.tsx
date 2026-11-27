@@ -1,10 +1,12 @@
+import * as ImagePicker from 'expo-image-picker';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Avatar, Button, Divider, SegmentedButtons, Text, TextInput } from 'react-native-paper';
 import * as Yup from 'yup';
 
-import { changePassword, updateUserProfile } from '@/api';
+import { changePassword, updateUserProfile, uploadProfilePhoto } from '@/api';
 import { BackArrowButton } from '@/components/shared/BackArrowButton';
 import { PasswordField } from '@/components/shared/PasswordField';
 import { Spacing } from '@/constants/theme';
@@ -22,7 +24,58 @@ export default function ProfileScreen() {
   const { user, updateUser } = useSession();
   const { showSuccess, showError } = useSnackbar();
   const { mode, setMode, language, setLanguage } = useThemeMode();
-  const profilePhotoUri = user?.profilePhoto?.startsWith('http') ? user.profilePhoto : undefined;
+  const [photoBusy, setPhotoBusy] = useState(false);
+  const profilePhotoUri =
+    user?.profilePhotoUrl ??
+    (user?.profilePhoto?.startsWith('http') ? user.profilePhoto : undefined);
+  const translate = (message: string) => t(message, { defaultValue: message });
+
+  const saveProfilePhoto = async (profilePhoto: string, successMessage: string) => {
+    if (!user) return;
+    const response = await updateUserProfile(user.id, { profilePhoto });
+    if (!response.success || !response.data) {
+      showError(translate(response.message));
+      return;
+    }
+    updateUser(response.data);
+    showSuccess(t(successMessage));
+  };
+
+  const pickProfilePhoto = async () => {
+    if (photoBusy) return;
+    // Opening the library needs no permission request, and on web the picker
+    // must open directly from the button press, so nothing is awaited first.
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: 'images',
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+    if (result.canceled || !result.assets?.[0]) return;
+
+    setPhotoBusy(true);
+    try {
+      const upload = await uploadProfilePhoto(result.assets[0]);
+      if (!upload.success || !upload.data) {
+        showError(translate(upload.message));
+        return;
+      }
+      await saveProfilePhoto(upload.data.key, 'profile.photoUploaded');
+    } catch {
+      showError(t('profile.imageUploadFailed'));
+    } finally {
+      setPhotoBusy(false);
+    }
+  };
+
+  const removeProfilePhoto = async () => {
+    setPhotoBusy(true);
+    try {
+      await saveProfilePhoto('', 'profile.photoRemoved');
+    } finally {
+      setPhotoBusy(false);
+    }
+  };
 
   const profileForm = useFormik({
     enableReinitialize: true,
@@ -38,11 +91,11 @@ export default function ProfileScreen() {
         if (!user) return;
         const response = await updateUserProfile(user.id, values);
         if (!response.success || !response.data) {
-          showError(response.message);
+          showError(t(response.message, { defaultValue: response.message }));
           return;
         }
         updateUser(response.data);
-        showSuccess(response.message);
+        showSuccess(t(response.message, { defaultValue: response.message }));
       } catch {
         showError(t('profile.updateError'));
       } finally {
@@ -58,10 +111,10 @@ export default function ProfileScreen() {
       try {
         const response = await changePassword(values.currentPassword, values.newPassword);
         if (!response.success) {
-          showError(response.message);
+          showError(t(response.message, { defaultValue: response.message }));
           return;
         }
-        showSuccess(response.message);
+        showSuccess(t(response.message, { defaultValue: response.message }));
         helpers.resetForm();
       } catch {
         showError(t('profile.changePassword.messages.unexpectedError'));
@@ -98,6 +151,23 @@ export default function ProfileScreen() {
           <Text variant="labelMedium" style={{ color: colors.primary }}>
             {user?.role?.replace('_', ' ') ?? 'ADMIN'}
           </Text>
+          <View style={styles.photoActions}>
+            <Button
+              mode="outlined"
+              compact
+              icon="camera-outline"
+              onPress={() => void pickProfilePhoto()}
+              loading={photoBusy}
+              disabled={photoBusy}
+            >
+              {t('profile.changePhoto')}
+            </Button>
+            {user?.profilePhoto ? (
+              <Button compact onPress={() => void removeProfilePhoto()} disabled={photoBusy}>
+                {t('profile.removePhoto')}
+              </Button>
+            ) : null}
+          </View>
         </View>
       </View>
 
@@ -209,6 +279,12 @@ const styles = StyleSheet.create({
   accountCopy: {
     flex: 1,
     gap: Spacing.one,
+  },
+  photoActions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.one,
+    marginTop: Spacing.one,
   },
   section: {
     padding: Spacing.three,

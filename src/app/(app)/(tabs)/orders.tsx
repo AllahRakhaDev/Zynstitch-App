@@ -1,5 +1,6 @@
 import { deleteOrder, fetchAllCustomers, fetchAllMeasurements, fetchAllOrders, saveOrder } from '@/api';
 import { CollectionTableScreen } from '@/components/shared/CollectionTableScreen';
+import { useExportJob } from '@/hooks/use-export-job';
 import type { ICustomer } from '@/types/customer.types';
 import type { IOrder } from '@/types/orders.types';
 import { useEffect, useState } from 'react';
@@ -10,6 +11,7 @@ const defaultDueDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().
 
 export default function OrdersScreen() {
   const { t } = useTranslation('orders');
+  const exportJob = useExportJob('orders');
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [measurements, setMeasurements] = useState<{ label: string; value: string }[]>([]);
 
@@ -33,7 +35,7 @@ export default function OrdersScreen() {
     const response = await fetchAllOrders(0, 50, search ? { search } : undefined);
     return {
       success: response.success,
-      message: response.message,
+      message: t(response.message, { defaultValue: response.message }),
       items: response.data?.orders ?? [],
       total: response.data?.total ?? 0,
     };
@@ -42,9 +44,11 @@ export default function OrdersScreen() {
   return (
     <CollectionTableScreen
       title={t('title')}
-      singularTitle={t('modal.viewTitle')}
+      singularTitle={t('singularTitle')}
       entity="orders"
       initialData={[]}
+      onExport={exportJob}
+      canRefresh
       loadRows={loadOrders}
       saveRowRemote={async (values, existing) => {
         const order: IOrder = {
@@ -60,11 +64,11 @@ export default function OrdersScreen() {
           dueDate: String(values.dueDate || defaultDueDate),
         };
         const response = await saveOrder(order);
-        return { success: response.success, message: response.message, data: response.data };
+        return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
       }}
       deleteRowRemote={async (id) => {
         const response = await deleteOrder(id);
-        return { success: response.success, message: response.message, data: response.data };
+        return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
       }}
       fields={[
         { key: 'orderNumber', label: t('modal.fields.orderNumber'), type: 'text', required: true },

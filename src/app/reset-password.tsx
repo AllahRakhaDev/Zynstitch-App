@@ -21,11 +21,11 @@ export default function ResetPasswordScreen() {
     onSubmit: async (values, helpers) => {
       const response = await resetPassword(token ?? '', values.password);
       if (!response.success) {
-        showError(response.message);
+        showError(t(response.message, { defaultValue: response.message }));
         helpers.setSubmitting(false);
         return;
       }
-      showSuccess(response.message);
+      showSuccess(t(response.message, { defaultValue: response.message }));
       helpers.setSubmitting(false);
       router.replace('/login');
     },
