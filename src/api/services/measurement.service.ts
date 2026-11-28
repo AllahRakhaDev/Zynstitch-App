@@ -42,10 +42,18 @@ export async function saveMeasurement(
   measurement: IMeasurement,
 ): Promise<MeasurementResponse<IMeasurement>> {
   try {
-    const { data } = await apiClient.post<MeasurementResponse<IMeasurement>>(
-      endpoints.measurements.list,
-      measurement,
-    );
+    const {
+      _id,
+      ownerId: _ownerId,
+      customerName: _customerName,
+      customerPhone: _customerPhone,
+      createdAt: _createdAt,
+      updatedAt: _updatedAt,
+      ...payload
+    } = measurement;
+    const { data } = _id
+      ? await apiClient.patch<MeasurementResponse<IMeasurement>>(endpoints.measurements.detail(_id), payload)
+      : await apiClient.post<MeasurementResponse<IMeasurement>>(endpoints.measurements.list, payload);
     return data;
   } catch (error) {
     return {

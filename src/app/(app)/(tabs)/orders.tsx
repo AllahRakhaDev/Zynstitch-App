@@ -1,13 +1,21 @@
 import { deleteOrder, fetchAllCustomers, fetchAllMeasurements, fetchAllOrders, saveOrder } from '@/api';
-import { CollectionTableScreen } from '@/components/shared/CollectionTableScreen';
+import { CollectionTableScreen, TableActionButton } from '@/components/shared/CollectionTableScreen';
 import { useExportJob } from '@/hooks/use-export-job';
 import type { ICustomer } from '@/types/customer.types';
 import type { IOrder } from '@/types/orders.types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Linking } from 'react-native';
+import { getWhatsAppUrl } from '@/utils/whatsapp';
 
 const defaultOrderDate = new Date().toISOString().slice(0, 10);
 const defaultDueDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
+/** Compares calendar days only, so a due date on the order day is allowed (same rule as the website). */
+const toDayValue = (value: unknown) => {
+  const date = new Date(String(value ?? ''));
+  return Number.isNaN(date.getTime()) ? null : Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+};
 
 export default function OrdersScreen() {
   const { t } = useTranslation('orders');
@@ -50,18 +58,47 @@ export default function OrdersScreen() {
       onExport={exportJob}
       canRefresh
       loadRows={loadOrders}
+      renderExtraActions={(row) => {
+        const url = getWhatsAppUrl(String(row.customerPhone ?? ''), String(row.customerName ?? ''));
+        if (!url) return null;
+        return (
+          <TableActionButton
+            icon="whatsapp"
+            iconColor="#25D366"
+            accessibilityLabel="WhatsApp"
+            onPress={(e: any) => {
+              e?.stopPropagation?.();
+              void Linking.openURL(url);
+            }}
+          />
+        );
+      }}
       saveRowRemote={async (values, existing) => {
+        const price = Number(values.price || 0);
+        const advancePaid = Number(values.advancePaid || 0);
+        if (advancePaid > price) {
+          return { success: false, message: t('serviceMessages.advanceExceedsPrice'), data: null };
+        }
+        const orderDay = toDayValue(values.orderDate || defaultOrderDate);
+        const dueDay = toDayValue(values.dueDate || defaultDueDate);
+        if (orderDay === null || dueDay === null) {
+          return { success: false, message: t('form.validation.orderDateRequired'), data: null };
+        }
+        if (dueDay < orderDay) {
+          return { success: false, message: t('form.validation.dueDateAfterOrderDate'), data: null };
+        }
+
         const order: IOrder = {
-          ...values,
           _id: typeof existing?._id === 'string' ? existing._id : undefined,
           customerId: String(values.customerId ?? ''),
           measurementId: values.measurementId ? String(values.measurementId) : null,
-          orderNumber: String(values.orderNumber ?? '').trim(),
-          price: Number(values.price || 0),
-          advancePaid: Number(values.advancePaid || 0),
+          // Assigned by the server on create (ORD-YYYY-NNNN), unchanged on edit.
+          price,
+          advancePaid,
           status: String(values.status || 'pending') as any,
           orderDate: String(values.orderDate || defaultOrderDate),
           dueDate: String(values.dueDate || defaultDueDate),
+          notes: String(values.notes ?? '').trim(),
         };
         const response = await saveOrder(order);
         return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
@@ -71,7 +108,6 @@ export default function OrdersScreen() {
         return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
       }}
       fields={[
-        { key: 'orderNumber', label: t('modal.fields.orderNumber'), type: 'text', required: true },
         {
           key: 'customerId',
           label: t('modal.fields.customer'),
@@ -89,6 +125,8 @@ export default function OrdersScreen() {
           key: 'status',
           label: t('modal.fields.status'),
           type: 'select',
+          required: true,
+          defaultValue: 'pending',
           options: [
             { label: t('status.pending'), value: 'pending' },
             { label: t('status.in_progress'), value: 'in_progress' },

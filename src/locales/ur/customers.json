@@ -74,7 +74,8 @@
     "deleteFail": "صارف حذف کرنے میں ناکام",
     "exportJobCreated": "برآمدی کام کامیابی سے تخلیق کیا گیا",
     "exportJobCreateFail": "برآمدی کام تخلیق کرنے میں ناکام",
-    "somethingWentWrong": "کچھ غلط ہوگیا۔"
+    "somethingWentWrong": "کچھ غلط ہوگیا۔",
+    "invalidPhone": "غلط فون نمبر۔ 03XXXXXXXXX (11 ہندسے) یا 923XXXXXXXXX (12 ہندسے) استعمال کریں۔"
   },
   "singularTitle": "گاہک"
 }

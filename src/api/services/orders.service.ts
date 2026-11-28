@@ -23,10 +23,18 @@ export async function fetchAllOrders(
 
 export async function saveOrder(order: IOrder): Promise<OrderResponse<IOrder | null>> {
   try {
-    const { data } = await apiClient.post<OrderResponse<IOrder>>(
-      endpoints.orders.list,
-      order,
-    );
+    const {
+      _id,
+      ownerId: _ownerId,
+      customerName: _customerName,
+      customerPhone: _customerPhone,
+      createdAt: _createdAt,
+      updatedAt: _updatedAt,
+      ...payload
+    } = order;
+    const { data } = _id
+      ? await apiClient.patch<OrderResponse<IOrder>>(endpoints.orders.detail(_id), payload)
+      : await apiClient.post<OrderResponse<IOrder>>(endpoints.orders.list, payload);
     return data;
   } catch (error) {
     return {

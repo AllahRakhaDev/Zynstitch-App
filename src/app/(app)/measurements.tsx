@@ -33,7 +33,8 @@ export default function MeasurementsScreen() {
       setPdfBusyId(null);
     }
   };
-  const today = new Date().toISOString().slice(0, 10);
+  const now = new Date();
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
   useEffect(() => {
     (async () => {
@@ -72,11 +73,23 @@ export default function MeasurementsScreen() {
       canRefresh
       loadRows={loadMeasurements}
       saveRowRemote={async (values, existing) => {
+        // Same rule as the website: new measurements are dated today or later;
+        // on edit an unchanged (older) date is kept, a changed one must be today or later.
+        const selectedDate = String(values.measurementDate ?? '').slice(0, 10);
+        const originalDate = String(existing?.measurementDate ?? '').slice(0, 10);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(selectedDate)) {
+          return { success: false, message: t('validation.required'), data: null };
+        }
+        if (selectedDate !== originalDate && selectedDate < today) {
+          return { success: false, message: t('validation.dateFutureOnly'), data: null };
+        }
+
         const measurement: IMeasurement = {
           ...values,
           _id: typeof existing?._id === 'string' ? existing._id : undefined,
           customerId: String(values.customerId ?? ''),
           measurementName: String(values.measurementName ?? '').trim(),
+          measurementDate: selectedDate,
         };
         const response = await saveMeasurement(measurement);
         return { success: response.success, message: t(response.message, { defaultValue: response.message }), data: response.data };
@@ -94,7 +107,7 @@ export default function MeasurementsScreen() {
           required: true,
           options: customers.map((c) => ({ label: c.name, value: c._id ?? '' })),
         },
-        { key: 'measurementDate', label: t('form.measurementDate'), type: 'date', defaultValue: today },
+        { key: 'measurementDate', label: t('form.measurementDate'), type: 'date', required: true, defaultValue: today },
         ...[
           'kameezLength',
           'sleeveLength',
@@ -106,7 +119,7 @@ export default function MeasurementsScreen() {
           'shalwarLength',
           'bottomOpening',
           'cuff',
-        ].map((key) => ({ key, label: t(`form.fields.${key}`), type: 'number' as const })),
+        ].map((key) => ({ key, label: t(`form.fields.${key}`), type: 'decimal' as const })),
         {
           key: 'collarStyle',
           label: t('form.fields.collarStyle'),

@@ -109,7 +109,8 @@
     "deleteFail": "آرڈر حذف کرنے میں ناکامی",
     "exportJobCreated": "برآمدی کام کامیابی سے بنایا گیا",
     "exportJobCreateFail": "برآمدی کام بنانے میں ناکامی",
-    "somethingWentWrong": "کچھ غلط ہوگیا۔"
+    "somethingWentWrong": "کچھ غلط ہوگیا۔",
+    "advanceExceedsPrice": "پیشگی ادائیگی قیمت سے زیادہ نہیں ہو سکتی"
   },
   "singularTitle": "آرڈر"
 }

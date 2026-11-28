@@ -4,18 +4,7 @@ import { CollectionTableScreen, TableActionButton } from '@/components/shared/Co
 import { useExportJob } from '@/hooks/use-export-job';
 import type { ICustomer } from '@/types/customer.types';
 import { Linking } from 'react-native';
-import { getWhatsAppUrl } from '@/utils/whatsapp';
-
-const formatPhoneNumber = (phone: string): { formatted: string; isValid: boolean } => {
-  const cleaned = phone.replace(/\D/g, '');
-  if (cleaned.startsWith('0') && cleaned.length === 11) {
-    return { formatted: '92' + cleaned.substring(1), isValid: true };
-  }
-  if (cleaned.startsWith('92') && cleaned.length === 12) {
-    return { formatted: cleaned, isValid: true };
-  }
-  return { formatted: '', isValid: false };
-};
+import { getWhatsAppUrl, normalizePhone } from '@/utils/whatsapp';
 
 export default function CustomersScreen() {
   const { t } = useTranslation('customers');
@@ -56,11 +45,11 @@ export default function CustomersScreen() {
         );
       }}
       saveRowRemote={async (values, existing) => {
-        const { formatted, isValid } = formatPhoneNumber(String(values.phone ?? ""));
-        if (!isValid) {
+        const formatted = normalizePhone(String(values.phone ?? ''));
+        if (!formatted) {
           return {
             success: false,
-            message: t("serviceMessages.invalidPhone"),
+            message: t('serviceMessages.invalidPhone'),
             data: null,
           };
         }

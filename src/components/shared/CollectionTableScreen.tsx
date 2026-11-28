@@ -32,7 +32,8 @@ type CollectionRow = Record<string, unknown>;
 type FormField = {
   key: string;
   label: string;
-  type?: 'text' | 'number' | 'date' | 'password' | 'select' | 'toggle';
+  /** `decimal`: numeric keyboard, but the value is sent as typed (empty stays empty). */
+  type?: 'text' | 'number' | 'decimal' | 'date' | 'password' | 'select' | 'toggle';
   required?: boolean;
   hideOnEdit?: boolean;
   defaultValue?: string | boolean;
@@ -184,12 +185,7 @@ export function CollectionTableScreen({
       Object.fromEntries(
         fields
           .filter((field) => !field.hideOnEdit)
-          .map((field) => [
-            field.key,
-            entity === 'orders' && field.key === 'orderNumber'
-              ? `ORD-${1001 + rows.length}`
-              : field.defaultValue ?? (field.type === 'toggle' ? false : ''),
-          ]),
+          .map((field) => [field.key, field.defaultValue ?? (field.type === 'toggle' ? false : '')]),
       ),
     );
   };
@@ -200,7 +196,14 @@ export function CollectionTableScreen({
       Object.fromEntries(
         fields
           .filter((field) => !field.hideOnEdit)
-          .map((field) => [field.key, (row[field.key] as string | boolean | undefined) ?? field.defaultValue ?? '']),
+          .map((field) => {
+            const value = row[field.key];
+            if (typeof value === 'boolean') return [field.key, value];
+            if (value === undefined || value === null) return [field.key, field.defaultValue ?? (field.type === 'toggle' ? false : '')];
+            // Date inputs are plain text: show YYYY-MM-DD rather than a full ISO timestamp.
+            if (field.type === 'date') return [field.key, String(value).slice(0, 10)];
+            return [field.key, String(value)];
+          }),
       ),
     );
   };
@@ -560,7 +563,8 @@ function FormFieldInput({
     );
   }
 
-  const keyboardType: KeyboardTypeOptions = field.type === 'number' ? 'decimal-pad' : 'default';
+  const keyboardType: KeyboardTypeOptions =
+    field.type === 'number' || field.type === 'decimal' ? 'decimal-pad' : field.key === 'phone' ? 'phone-pad' : 'default';
   return (
     <TextInput
       mode="outlined"

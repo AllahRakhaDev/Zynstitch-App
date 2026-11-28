@@ -109,7 +109,8 @@
     "deleteFail": "Failed to delete order",
     "exportJobCreated": "Export job created successfully",
     "exportJobCreateFail": "Failed to create export job",
-    "somethingWentWrong": "Something went wrong."
+    "somethingWentWrong": "Something went wrong.",
+    "advanceExceedsPrice": "Advance paid cannot be more than the price"
   },
   "singularTitle": "Order"
 }
